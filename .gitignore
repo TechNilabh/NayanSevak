@@ -14,8 +14,7 @@ runs/
 *.onnx
 *.torchscript
 
-data/images/
-data/labels/
+data/
 
 .vscode/
 
