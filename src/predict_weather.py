@@ -1,7 +1,8 @@
+import numpy as np
 import torch
+import cv2
 from torchvision import models, transforms
 from PIL import Image
-import cv2
 
 CLASSES = ["foggy", "rainy", "snowy", "sunny"]
 MODEL_PATH = "runs/weather/best_weather.pt"
@@ -23,22 +24,50 @@ def load_weather_model(path=MODEL_PATH):
     _model = model
     return _model
 
-def predict_weather(frame_bgr):
+def preprocess(frame_bgr):
     if _model is None:
         load_weather_model()
     rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
-    tensor = _transform(Image.fromarray(rgb)).unsqueeze(0)
+    image = Image.fromarray(rgb)
+    return _transform(image).unsqueeze(0)
+
+def calculate_visibility_score(frame_bgr):
+    gray = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2GRAY)
+    brightness = np.mean(gray)
+    contrast = np.std(gray)
+    brightness_score = brightness / 255.0
+    contrast_score = min(contrast / 64.0, 1.0)
+    visibility_score = ((0.5 * brightness_score) + (0.5 * contrast_score))
+    return float(np.clip(visibility_score, 0.0, 1.0))
+
+def predict_weather(frame_bgr):
+    tensor = preprocess(frame_bgr)
     with torch.no_grad():
         idx = _model(tensor).argmax(dim=1).item()
-    return CLASSES[idx]
+    weather = CLASSES[idx]
+    return weather
 
 def predict_weather_with_confidence(frame_bgr):
-    if _model is None:
-        load_weather_model()
-    rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
-    tensor = _transform(Image.fromarray(rgb)).unsqueeze(0)
+    tensor = preprocess(frame_bgr)
     with torch.no_grad():
         logits = _model(tensor)
         probs = torch.softmax(logits, dim=1)[0]
-        idx = probs.argmax().item()
-    return CLASSES[idx], float(probs[idx])
+    idx = int(probs.argmax().item())
+    weather = CLASSES[idx]
+    weather_confidence = float(probs[idx])
+    visibility_score = calculate_visibility_score(frame_bgr)
+    return weather, weather_confidence, visibility_score
+
+if __name__ == "__main__":
+    image_path = "data/weather_dataset/sunny/00024.jpg"
+
+    frame = cv2.imread(image_path)
+
+    if frame is None:
+        raise ValueError(f"Could not read image: {image_path}")
+
+    weather, weather_confidence, visibility_score = predict_weather_with_confidence(frame)
+
+    print(f"Weather: {weather}")
+    print(f"Weather confidence: {weather_confidence:.3f}")
+    print(f"Visibility score: {visibility_score:.3f}")
