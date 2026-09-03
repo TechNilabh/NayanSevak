@@ -1,33 +1,26 @@
-import cv2
 import time
+import cv2
+import numpy as np
+import pandas as pd
 
-from ultralytics import YOLO
-from predict_weather import load_weather_model, predict_weather
-from sensor_reader import load_telemetry, sensor_confidence_at
-from fusion import fuse
+from detect import model as yolo_model, CONF_THRESHOLD, HAZARD_CLASSES
+from predict_weather import load_weather_model, predict_weather_with_confidence
+from vibration_sensor import (
+    predict_vibration_probability,
+    bandpass_filter,
+    LOW_CUTOFF,
+    HIGH_CUTOFF,
+    SAMPLE_RATE as VIB_SAMPLE_RATE,
+    WINDOW_SIZE as VIB_WINDOW_SIZE,
+)
+from ultrasonic_sensor import calculate_ultrasonic_score, SAMPLE_RATE as US_SAMPLE_RATE
+from fusion import fusion_engine
 
-model = YOLO("runs/detect/nayan_sevak/weights/best.pt")
-weather_model = load_weather_model()
-telemetry = load_telemetry()
+WEATHER_CHECK_INTERVAL = 10   # frames between weather re-checks (MobileNet is heavier than a threshold check)
+DETECT_INTERVAL = 0.1         # seconds between fusion ticks
 
-CLASS_NAMES = {
-    0: "pothole",
-    1: "Green Light",
-    2: "Red Light",
-    3: "Speed Limit 10",
-    4: "Speed Limit 100",
-    5: "Speed Limit 110",
-    6: "Speed Limit 120",
-    7: "Speed Limit 20",
-    8: "Speed Limit 30",
-    9: "Speed Limit 40",
-    10: "Speed Limit 50",
-    11: "Speed Limit 60",
-    12: "Speed Limit 70",
-    13: "Speed Limit 80",
-    14: "Speed Limit 90",
-    15: "Stop"
-}
+VIBRATION_CSV = "data/vibration_log.csv"
+ULTRASONIC_CSV = "ultrasonic_data.csv"
 
 TIER_COLORS = {
     "CRITICAL": (0, 0, 255),
@@ -35,83 +28,123 @@ TIER_COLORS = {
     "NOMINAL":  (0, 255, 0),
 }
 
-def run_pipeline(source=0, interval=6, conf=0.4, weather_check_interval=10):
+
+def get_camera_confidence(frame, conf):
+    """Run YOLO on one frame, return the highest hazard-class confidence."""
+    results = yolo_model.predict(source=frame, conf=conf, verbose=False)
+    camera_confidence = 0.0
+    for result in results:
+        if result.boxes is None:
+            continue
+        for box in result.boxes:
+            class_id = int(box.cls[0])
+            class_name = yolo_model.names[class_id]
+            if class_name in HAZARD_CLASSES:
+                camera_confidence = max(camera_confidence, float(box.conf[0]))
+    return camera_confidence
+
+
+def get_vibration_confidence(vibration_csv, row_idx):
+    """
+    Read the most recent VIB_WINDOW_SIZE rows appended to the vibration log,
+    filter them, and score with the trained RandomForest classifier.
+    Returns (probability, new_row_idx).
+    """
+    df = pd.read_csv(vibration_csv)
+    if len(df) < VIB_WINDOW_SIZE:
+        return 0.0, row_idx
+
+    end = len(df)
+    start = end - VIB_WINDOW_SIZE
+    window = df.iloc[start:end][["ax", "ay", "az"]].to_numpy(dtype=float)
+
+    ax, ay, az = window[:, 0], window[:, 1], window[:, 2]
+    magnitude = np.sqrt(ax ** 2 + ay ** 2 + az ** 2)
+    magnitude = magnitude - np.mean(magnitude)
+    filtered = bandpass_filter(magnitude, LOW_CUTOFF, HIGH_CUTOFF, VIB_SAMPLE_RATE)
+
+    probability = predict_vibration_probability(filtered)
+    return probability, end
+
+
+def get_ultrasonic_confidence(ultrasonic_csv, row_idx):
+    """
+    Read the latest row appended to the ultrasonic log, derive closing rate
+    from the previous row, and score it. Returns (score, new_row_idx).
+    """
+    df = pd.read_csv(ultrasonic_csv)
+    if len(df) == 0:
+        return 0.0, row_idx
+
+    current_idx = len(df) - 1
+    prev_idx = max(0, current_idx - 1)
+    distance = float(df.iloc[current_idx]["distance"])
+    prev_distance = float(df.iloc[prev_idx]["distance"])
+    closing_rate = -(distance - prev_distance) * US_SAMPLE_RATE
+
+    score = calculate_ultrasonic_score(distance, closing_rate)
+    return score, current_idx
+
+
+def run_pipeline(source=0, interval=DETECT_INTERVAL, conf=CONF_THRESHOLD,
+                  weather_check_interval=WEATHER_CHECK_INTERVAL,
+                  vibration_csv=VIBRATION_CSV, ultrasonic_csv=ULTRASONIC_CSV):
     cap = cv2.VideoCapture(source)
     if not cap.isOpened():
         print("Could not open video source")
         return
 
-    print(f"Pipeline started. Detecting every {interval}s. Press Q to quit.")
+    load_weather_model()
 
-    last_detect_time = 0
-    last_detections = []
-    weather_state = "sunny"
+    print(f"Pipeline started. Fusing every {interval}s. Press Q to quit.")
+
+    last_tick = 0
+    weather_state, visibility_score = "sunny", 1.0
     frame_count = 0
-    start_time = time.time()
+    vib_row_idx, us_row_idx = 0, 0
+    last_result = None
 
     while True:
         ret, frame = cap.read()
         if not ret:
             break
 
-        current_time = time.time()
+        now = time.time()
         frame_count += 1
 
-        if current_time - last_detect_time >= interval:
-            last_detect_time = current_time
+        if now - last_tick >= interval:
+            last_tick = now
+
+            camera_confidence = get_camera_confidence(frame, conf)
 
             if frame_count % weather_check_interval == 0:
-                weather_state = predict_weather(weather_model, frame)
+                weather_state, _, visibility_score = predict_weather_with_confidence(frame)
 
-            elapsed = current_time - start_time
-            sensor_conf = sensor_confidence_at(telemetry, elapsed)
+            vibration_confidence, vib_row_idx = get_vibration_confidence(vibration_csv, vib_row_idx)
+            ultrasonic_confidence, us_row_idx = get_ultrasonic_confidence(ultrasonic_csv, us_row_idx)
 
-            results = model.track(frame, conf=conf, verbose=False, device="mps", persist=True)
-            last_detections = []
+            fused = fusion_engine(
+                camera_confidence=camera_confidence,
+                vibration_class_prob=vibration_confidence,
+                ultrasonic_score=ultrasonic_confidence,
+                visibility_score=visibility_score,
+            )
+            last_result = fused
 
-            for result in results:
-                for box in result.boxes:
-                    cls_id = int(box.cls)
-                    label = CLASS_NAMES.get(cls_id, "unknown")
-                    confidence = float(box.conf)
-                    track_id = int(box.id) if box.id is not None else -1
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])
-
-                    fused_conf, tier = fuse(track_id, confidence, sensor_conf, weather_state)
-
-                    last_detections.append({
-                        "label": label,
-                        "conf": confidence,
-                        "fused": fused_conf,
-                        "tier": tier,
-                        "bbox": (x1, y1, x2, y2)
-                    })
-
-            if last_detections:
-                print(f"\n[{time.strftime('%H:%M:%S')}] Weather: {weather_state} | Detections:")
-                for det in last_detections:
-                    print(f"  {det['label']} raw={det['conf']:.0%} fused={det['fused']:.0%} [{det['tier']}]")
-            else:
-                print(f"[{time.strftime('%H:%M:%S')}] Weather: {weather_state} | No detections")
+            print(f"[{time.strftime('%H:%M:%S')}] weather={weather_state} "
+                  f"cam={camera_confidence:.2f} vib={vibration_confidence:.2f} "
+                  f"us={ultrasonic_confidence:.2f} -> "
+                  f"combined={fused['combined_confidence']:.2f} [{fused['tier']}]")
 
         display = frame.copy()
-        for det in last_detections:
-            x1, y1, x2, y2 = det["bbox"]
-            color = TIER_COLORS[det["tier"]]
-            cv2.rectangle(display, (x1, y1), (x2, y2), color, 2)
-            cv2.putText(display, f"{det['label']} {det['tier']} {det['fused']:.0%}",
-                        (x1, y1 - 8), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
-
+        if last_result:
+            color = TIER_COLORS[last_result["tier"]]
+            cv2.putText(display, f"{last_result['tier']} {last_result['combined_confidence']:.0%}",
+                        (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2)
         cv2.putText(display, f"Weather: {weather_state}",
-                    (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
-
-        next_detect = max(0, interval - (current_time - last_detect_time))
-        cv2.putText(display, f"Next scan in: {next_detect:.1f}s",
-                    (10, display.shape[0] - 15),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+                    (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
 
         cv2.imshow("Car Vigilanty Assistant", display)
-
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
