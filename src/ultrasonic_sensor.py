@@ -69,7 +69,7 @@ def process_ultrasonic_file(filepath):
     return np.array(samples)
 
 def main():
-    filepath = "ultrasonic_data.csv"
+    filepath = "data/sensor_dataset/ultrasonic_data.csv"
     data = process_ultrasonic_file(filepath)
 
     if len(data) == 0:

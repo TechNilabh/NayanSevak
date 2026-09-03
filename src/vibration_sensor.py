@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
-DATASET_DIR = "dataset"
+DATASET_DIR = "data/sensor_dataset"
 MODEL_PATH = "runs/sensor/vibration_rf.joblib"
 
 SAMPLE_RATE = 100
@@ -75,17 +75,10 @@ def process_file(filepath):
     return samples
 
 def load_dataset():
-    all_samples = []
-    files = glob.glob(os.path.join(DATASET_DIR, "**", "*.csv"), recursive=True)
-    print(f"Found {len(files)} CSV files.")
-    for file in files:
-        print(f"Processing: {file}")
-        try:
-            samples = process_file(file)
-            all_samples.extend(samples)
-        except Exception as e:
-            print(f"Error: {e}")
-    return np.array(all_samples, dtype=float)
+    filepath = os.path.join(DATASET_DIR, "vibration_data.csv")
+    print(f"Processing: {filepath}")
+    samples = process_file(filepath)
+    return np.array(samples, dtype=float)
 
 def train_model():
     data = load_dataset()
