@@ -1,0 +1,133 @@
+/* HUD Master Style Sheet - Nayan Sevak AI Dashboard (Layout-Only Pass) */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:root {
+  --color-bg-base: #0A0C10;
+  --color-bg-card: #12161F;
+  --color-bg-card-hover: #1A202C;
+  --color-border-glass: rgba(255, 255, 255, 0.08);
+  --color-accent-cyan: #00E5FF;
+  --color-accent-cyan-glow: rgba(0, 229, 255, 0.3);
+  --color-accent-amber: #FFB300;
+  --color-accent-red: #FF1744;
+  --color-accent-green: #00E676;
+  --color-text-primary: #F0F4F8;
+  --color-text-secondary: #8A99AD;
+  --color-text-disabled: #4A5568;
+  
+  --font-display: 'Titillium Web', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-telemetry: 'IBM Plex Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Enforce Tabular Nums across all dynamic telemetry numbers */
+.tabular-nums, .font-telemetry, [data-telemetry] {
+  font-family: var(--font-telemetry);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Glassmorphism utility */
+.glass-card {
+  background: rgba(18, 22, 31, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border-glass);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-pill {
+  background: rgba(18, 22, 31, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
+}
+
+/* Neon Glow utilities */
+.neon-text-cyan {
+  color: var(--color-accent-cyan);
+  text-shadow: 0 0 12px var(--color-accent-cyan-glow);
+}
+
+.neon-border-cyan {
+  border-color: var(--color-accent-cyan);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.25) inset, 0 0 15px rgba(0, 229, 255, 0.25);
+}
+
+.neon-text-amber {
+  color: var(--color-accent-amber);
+  text-shadow: 0 0 12px rgba(255, 179, 0, 0.5);
+}
+
+.neon-text-red {
+  color: var(--color-accent-red);
+  text-shadow: 0 0 12px rgba(255, 23, 68, 0.6);
+}
+
+/* OVERLAY SCREEN CONTAINER: Dedicated full-bleed container for 00, 02, 07, 09, 10 */
+.hud-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--color-bg-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Semi-transparent overlay for Voice Assistant backdrop */
+.hud-overlay-backdrop {
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Main Content Area for Non-Overlay Grid Screens (01, 03, 04, 05, 06, 08, 11) */
+#hud-content {
+  position: absolute;
+  top: 48px;
+  left: 100px;
+  right: 0;
+  bottom: 30px;
+  overflow: hidden;
+  padding: 16px;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-cyan);
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Multimodal Voice Assistant Overlay</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Space Grotesk & JetBrains Mono for Brand Alignment -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@600;700&amp;family=Titillium+Web:wght@600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration (Brand Anchors) -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001f24",
+                        "surface-dim": "#111318",
+                        "secondary-fixed": "#9cf0ff",
+                        "tertiary-fixed": "#d8e2ff",
+                        "primary-container": "#ff525f",
+                        "on-primary-container": "#5b0011",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary-fixed": "#001a43",
+                        "surface": "#111318",
+                        "on-secondary": "#00363d",
+                        "surface-container-high": "#282a2e",
+                        "surface-container-highest": "#333539",
+                        "surface-variant": "#333539",
+                        "surface-container-low": "#1a1c20",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "on-tertiary-fixed-variant": "#004397",
+                        "on-secondary-container": "#00616d",
+                        "on-surface": "#e2e2e8",
+                        "surface-container": "#1e2024",
+                        "tertiary-container": "#508eff",
+                        "on-primary-fixed": "#400009",
+                        "on-primary": "#680014",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-surface-variant": "#e8bcbb",
+                        "on-background": "#e2e2e8",
+                        "inverse-on-surface": "#2f3035",
+                        "tertiary-fixed-dim": "#aec6ff",
+                        "primary": "#ffb3b3",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#00daf3",
+                        "surface-bright": "#37393e",
+                        "surface-tint": "#ffb3b3",
+                        "on-primary-fixed-variant": "#920021",
+                        "on-tertiary": "#002e6b",
+                        "secondary-container": "#00e3fd",
+                        "on-error": "#690005",
+                        "outline": "#ae8787",
+                        "outline-variant": "#5e3f3e",
+                        "inverse-primary": "#bf002e",
+                        "on-tertiary-container": "#00275e",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#aec6ff",
+                        "primary-fixed-dim": "#ffb3b3",
+                        "background": "#111318",
+                        "primary-fixed": "#ffdad9",
+                        "secondary": "#bdf4ff",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "unit": "4px",
+                        "margin-screen": "32px",
+                        "gutter": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "data-stream": ["JetBrains Mono"],
+                        "speed-display": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "body-lg": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"],
+                        "assistant-header": ["Titillium Web"],
+                        "assistant-body": ["Inter"]
+                    },
+                    "fontSize": {
+                        "data-stream": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "speed-display": ["120px", { "lineHeight": "120px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom Styles for Brutalist Glassmorphism */
+        .glass-panel {
+            background: rgba(18, 22, 31, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 227, 253, 0.5);
+        }
+        
+        .pulse-border {
+            animation: pulse-cyan 2s infinite;
+        }
+
+        @keyframes pulse-cyan {
+            0% { box-shadow: 0 0 0 0 rgba(0, 227, 253, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 227, 253, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 227, 253, 0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden font-body-md antialiased flex flex-col relative selection:bg-secondary-container selection:text-surface">
+<!-- Simulated Background Cockpit (Blurred) -->
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full filter blur-md opacity-40" data-alt="A highly complex, dark-themed futuristic automotive heads-up display dashboard interface. It features sharp geometric data visualizations, neon cyan telemetry rings, and deep black backgrounds with subtle white grid lines. The lighting is low to prevent cabin glare, with bright cyan and red accents highlighting critical system metrics. Experimental brutalist aesthetic with raw tech data streams." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMBn77eo5t_xwy3ccKQ_aWq_CCebBlyM3eJOboNV3eaHHJSg6PVShzYDOJpifuQz19xhHS7YlBEheLoBkqj3yrLDlwOSrzSrTOqz9Cm6AI2k9UpGKqFGeYhQadfvWdUSwV0WEHuj47aX9ythrjAVRN75ihxNjZX9_ap-bg6EY2_3aS9uENTTxC9O9gKhCkAIhrG4gbB7QvihHaKcBpPQ9T0qUayg2v9ygsi1AYt-d8_Rmh4a-fJJqq7g')"></div>
+<div class="absolute inset-0 bg-surface/70 mix-blend-multiply pointer-events-none"></div>
+</div>
+<!-- Main Overlay Container -->
+<main class="relative z-10 flex flex-col h-full w-full p-margin-screen">
+<!-- Top Controls: Close Button -->
+<header class="flex justify-end w-full">
+<button aria-label="Close Assistant" class="w-12 h-12 flex items-center justify-center border border-white/10 hover:border-secondary-container bg-surface-container/50 hover:bg-secondary-container/10 transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface hover:text-secondary-container text-[24px]">close</span>
+</button>
+</header>
+<!-- Center Stage: Neural Orb Animation -->
+<section class="flex-grow flex items-center justify-center relative">
+<!-- Three.js Neural Orb Container -->
+<div class="w-[500px] h-[500px] relative flex items-center justify-center">
+<!-- STITCH_THREEJS_START:ANIMATION_23 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_23" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_23');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  (function() {
+  const container = document.getElementById('threejs-container-ANIMATION_23');
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Neural Orb - Grouped for rotation
+  const group = new THREE.Group();
+  scene.add(group);
+
+  // Main Orb Core
+  const coreGeo = new THREE.SphereGeometry(1.5, 64, 64);
+  const coreMat = new THREE.MeshPhongMaterial({
+    color: 0x00E5FF,
+    transparent: true,
+    opacity: 0.3,
+    wireframe: true
+  });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  group.add(core);
+
+  // Floating Particles
+  const partCount = 100;
+  const partGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(partCount * 3);
+  for(let i=0; i<partCount*3; i++) {
+    positions[i] = (Math.random() - 0.5) * 4;
+  }
+  partGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const partMat = new THREE.PointsMaterial({ color: 0xFFB300, size: 0.05 });
+  const particles = new THREE.Points(partGeo, partMat);
+  group.add(particles);
+
+  const light = new THREE.PointLight(0x00E5FF, 1, 10);
+  light.position.set(2, 2, 2);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0x404040));
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const time = Date.now() * 0.001;
+    
+    group.rotation.y += 0.005;
+    group.rotation.x += 0.003;
+    
+    // Pulse effect
+    const s = 1 + Math.sin(time * 2) * 0.1;
+    core.scale.set(s, s, s);
+    
+    // Wave-like vertex manipulation would go here, 
+    // keeping it lightweight with scale pulse for now.
+    
+    renderer.render(scene, camera);
+  }
+
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+
+  animate();
+})();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_23 -->
+<!-- Ambient Glow Behind Orb -->
+<div class="absolute w-64 h-64 bg-secondary-container/20 rounded-full blur-[80px] pointer-events-none"></div>
+</div>
+</section>
+<!-- Bottom Transcript & Actions -->
+<footer class="w-full max-w-4xl mx-auto flex flex-col gap-stack-lg pb-margin-screen relative z-20">
+<!-- Transcript Box (Glassmorphic) -->
+<div class="glass-panel p-container-padding flex flex-col gap-stack-sm rounded-none border-l-4 border-l-secondary-container pulse-border relative overflow-hidden">
+<!-- Decorative Corner -->
+<div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-white/20"></div>
+<div class="flex items-center gap-2 text-secondary-container opacity-80 font-data-stream text-data-stream">
+<span class="material-symbols-outlined text-[16px] animate-pulse">mic</span>
+<span>USER_INPUT_DETECTED //</span>
+</div>
+<h2 class="font-assistant-header font-bold text-headline-md text-on-surface glow-text">
+                    "Nayan Sevak, report nearest road hazard"
+                </h2>
+<div class="w-full h-px bg-gradient-to-r from-secondary-container/50 to-transparent my-2"></div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-[20px] mt-1">warning</span>
+<p class="font-assistant-body font-medium text-body-lg text-error">
+                        "Severe Pothole detected 340 meters ahead on current route lane."
+                    </p>
+</div>
+</div>
+<!-- Action Pills -->
+<div class="flex flex-wrap gap-gutter justify-center items-center">
+<!-- Pill 1 -->
+<button class="px-6 py-3 border border-secondary-container/50 bg-surface-container/40 hover:bg-secondary-container hover:text-surface transition-all duration-200 font-label-caps text-label-caps uppercase tracking-widest flex items-center gap-2 group">
+<span class="material-symbols-outlined text-[18px] group-hover:text-surface text-secondary-container">volume_off</span>
+                    Mute Audio Chimes
+                </button>
+<!-- Pill 2 -->
+<button class="px-6 py-3 border border-white/10 bg-surface-container/40 hover:border-secondary-container hover:bg-secondary-container/10 transition-all duration-200 font-label-caps text-label-caps uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">sensors</span>
+<span class="text-on-surface-variant">Switch to Sensor-Primary</span>
+</button>
+<!-- Pill 3 -->
+<button class="px-6 py-3 border border-white/10 bg-surface-container/40 hover:border-secondary-container hover:bg-secondary-container/10 transition-all duration-200 font-label-caps text-label-caps uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">replay</span>
+<span class="text-on-surface-variant">Repeat Last Warning</span>
+</button>
+<!-- Pill 4 -->
+<button class="px-6 py-3 border border-white/10 bg-surface-container/40 hover:border-secondary-container hover:bg-secondary-container/10 transition-all duration-200 font-label-caps text-label-caps uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">build</span>
+<span class="text-on-surface-variant">Recalibrate Sensors</span>
+</button>
+</div>
+</footer>
+</main>
+</body></html>

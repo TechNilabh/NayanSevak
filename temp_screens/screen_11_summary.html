@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drive-End Telemetry &amp; Safety Summary - Nayan Sevak HUD</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#001f24",
+                      "surface-dim": "#111318",
+                      "secondary-fixed": "#9cf0ff",
+                      "tertiary-fixed": "#d8e2ff",
+                      "primary-container": "#ff525f",
+                      "on-primary-container": "#5b0011",
+                      "inverse-surface": "#e2e2e8",
+                      "on-tertiary-fixed": "#001a43",
+                      "surface": "#111318",
+                      "on-secondary": "#00363d",
+                      "surface-container-high": "#282a2e",
+                      "surface-container-highest": "#333539",
+                      "surface-variant": "#333539",
+                      "surface-container-low": "#1a1c20",
+                      "on-secondary-fixed-variant": "#004f58",
+                      "on-tertiary-fixed-variant": "#004397",
+                      "on-secondary-container": "#00616d",
+                      "on-surface": "#e2e2e8",
+                      "surface-container": "#1e2024",
+                      "tertiary-container": "#508eff",
+                      "on-primary-fixed": "#400009",
+                      "on-primary": "#680014",
+                      "surface-container-lowest": "#0c0e12",
+                      "on-surface-variant": "#e8bcbb",
+                      "on-background": "#e2e2e8",
+                      "inverse-on-surface": "#2f3035",
+                      "tertiary-fixed-dim": "#aec6ff",
+                      "primary": "#ffb3b3",
+                      "error": "#ffb4ab",
+                      "secondary-fixed-dim": "#00daf3",
+                      "surface-bright": "#37393e",
+                      "surface-tint": "#ffb3b3",
+                      "on-primary-fixed-variant": "#920021",
+                      "on-tertiary": "#002e6b",
+                      "secondary-container": "#00e3fd",
+                      "on-error": "#690005",
+                      "outline": "#ae8787",
+                      "outline-variant": "#5e3f3e",
+                      "inverse-primary": "#bf002e",
+                      "on-tertiary-container": "#00275e",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#aec6ff",
+                      "primary-fixed-dim": "#ffb3b3",
+                      "background": "#111318",
+                      "primary-fixed": "#ffdad9",
+                      "secondary": "#bdf4ff",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "20px",
+                      "unit": "4px",
+                      "margin-screen": "32px",
+                      "gutter": "16px",
+                      "stack-lg": "32px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "data-stream": [
+                              "JetBrains Mono"
+                      ],
+                      "speed-display": [
+                              "Space Grotesk"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "data-stream": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "speed-display": [
+                              "120px",
+                              {
+                                      "lineHeight": "120px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #0A0C10;
+        }
+        .hud-card {
+            background-color: #12161F;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+        }
+        .neon-text-cyan {
+            text-shadow: 0 0 10px rgba(0, 227, 253, 0.5);
+        }
+        .neon-border-cyan {
+            box-shadow: inset 0 0 15px rgba(0, 227, 253, 0.2), 0 0 10px rgba(0, 227, 253, 0.1);
+        }
+        .chart-ring {
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 55.264; /* 78% of 251.2 */
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+      </style>
+</head>
+<body class="text-on-surface font-body-md min-h-screen flex flex-col p-margin-screen gap-stack-lg overflow-hidden">
+<!-- Top Navigation / Title (Suppressed shell, transactional end screen) -->
+<header class="flex justify-between items-center w-full">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">DRIVE SUMMARY</h1>
+<p class="font-data-stream text-data-stream text-on-surface-variant uppercase mt-unit">SESSION ENDED • LOG ID: NS-9942-X</p>
+</div>
+<div class="flex items-center gap-2 border border-secondary-container/30 px-4 py-2 rounded-none bg-secondary-container/5">
+<span class="material-symbols-outlined text-secondary-container" data-icon="sync" style="font-variation-settings: 'FILL' 1;">sync</span>
+<span class="font-data-stream text-data-stream text-secondary-container uppercase">SYNC COMPLETE</span>
+</div>
+</header>
+<!-- Header Metrics Grid -->
+<div class="grid grid-cols-4 gap-gutter w-full">
+<!-- Metric 1 -->
+<div class="hud-card p-container-padding flex flex-col gap-unit relative overflow-hidden group hover:border-secondary-container/50 transition-colors">
+<div class="absolute -right-4 -bottom-4 opacity-5">
+<span class="material-symbols-outlined text-9xl" data-icon="route">route</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL DISTANCE</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-secondary-container neon-text-cyan">38.4</span>
+<span class="font-data-stream text-data-stream text-on-surface">KM</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="hud-card p-container-padding flex flex-col gap-unit relative overflow-hidden group hover:border-secondary-container/50 transition-colors">
+<div class="absolute -right-4 -bottom-4 opacity-5">
+<span class="material-symbols-outlined text-9xl" data-icon="timer">timer</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">DRIVE TIME</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-secondary-container neon-text-cyan">48</span>
+<span class="font-data-stream text-data-stream text-on-surface">MIN</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="hud-card p-container-padding flex flex-col gap-unit relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute -right-4 -bottom-4 opacity-5">
+<span class="material-symbols-outlined text-9xl" data-icon="warning">warning</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">HAZARDS LOGGED</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary">18</span>
+<span class="font-data-stream text-data-stream text-on-surface">EVENTS</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="hud-card p-container-padding flex flex-col gap-unit relative overflow-hidden group hover:border-secondary-container/50 transition-colors neon-border-cyan border-secondary-container/30">
+<div class="absolute -right-4 -bottom-4 opacity-5">
+<span class="material-symbols-outlined text-9xl" data-icon="verified">verified</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">SAFETY INDEX</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-secondary-container neon-text-cyan">96</span>
+<span class="font-data-stream text-data-stream text-on-surface">/100</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Map and Analytics -->
+<div class="flex-1 grid grid-cols-3 gap-gutter h-full min-h-[400px]">
+<!-- Left Panel: Dark Mode Vector Map -->
+<div class="col-span-2 hud-card relative overflow-hidden flex flex-col">
+<div class="absolute top-0 left-0 w-full p-4 z-10 flex justify-between items-center pointer-events-none bg-gradient-to-b from-surface/80 to-transparent">
+<span class="font-label-caps text-label-caps text-on-surface">ROUTE TELEMETRY LOG</span>
+<span class="font-data-stream text-data-stream text-secondary-container">GPS LOCK ACTIVE</span>
+</div>
+<!-- Map Placeholder -->
+<div class="flex-1 relative bg-[#0c0e12]">
+<img class="w-full h-full object-cover opacity-60" data-alt="A highly detailed top-down view of a dark mode minimalist digital city map. The map uses deep blacks and dark charcoal grays. A bright cyan glowing line traces a complex route through the city streets. Scattered along the route are small, intense glowing pinpoints of light in cyan, bright amber, and stark red, representing data markers. The overall aesthetic is a futuristic, brutalist command-center display, optimized for low light." data-location="New Delhi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4w8TnMtLL_-OOn3xfLCIS8FSUBT2S_mGHhWbuXZY1JAdijMLx1bVpyDFyYgPbZzq44jOmwXkKQCjU6LvAncgpKD3TqzdNLNqphIraycqrc3mdlodp9Jbm_hvYo0x8pzQdilt8LyYs_Et1HkIt86P0ugeCQ0kXazT7gAlK85GcN2QyeniaIGYmJLpZgS_bsZ3As8APqk1TKmzFl7f-TNrkvg8cBeyzRDHhgdflAOi7PWvdCChZS16eog"/>
+<!-- Map Overlay UI elements (mocking the pins) -->
+<div class="absolute inset-0 pointer-events-none p-8 flex flex-col justify-end">
+<!-- Mock Pins via CSS positioning -->
+<div class="absolute top-1/4 left-1/3 w-3 h-3 rounded-full bg-secondary-container shadow-[0_0_10px_#00e3fd] border border-white"></div>
+<div class="absolute top-1/2 left-1/2 w-3 h-3 rounded-full bg-secondary-container shadow-[0_0_10px_#00e3fd] border border-white"></div>
+<div class="absolute top-2/3 left-1/4 w-3 h-3 rounded-full bg-[#FFB300] shadow-[0_0_10px_#FFB300] border border-white"></div>
+<div class="absolute bottom-1/4 right-1/3 w-3 h-3 rounded-full bg-primary shadow-[0_0_10px_#ffb3b3] border border-white animate-pulse"></div>
+<!-- Legend -->
+<div class="bg-surface/90 border border-white/10 p-3 rounded-md inline-flex flex-col gap-2 w-max backdrop-blur-sm pointer-events-auto">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary-container shadow-[0_0_5px_#00e3fd]"></div>
+<span class="font-data-stream text-data-stream text-on-surface">STANDARD LOG</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#FFB300] shadow-[0_0_5px_#FFB300]"></div>
+<span class="font-data-stream text-data-stream text-on-surface">WARNING</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_5px_#ffb3b3]"></div>
+<span class="font-data-stream text-data-stream text-on-surface">CRITICAL HAZARD</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Analytics and Actions -->
+<div class="col-span-1 flex flex-col gap-gutter">
+<!-- Card 1: Modal Fusion Breakdown -->
+<div class="hud-card p-container-padding flex-1 flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface border-b border-white/10 pb-2 mb-4 w-full">MODAL FUSION BREAKDOWN</span>
+<div class="flex-1 flex flex-col items-center justify-center gap-stack-md">
+<!-- Chart Graphic -->
+<div class="relative w-32 h-32 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background Ring (Sensor) -->
+<circle cx="50" cy="50" fill="none" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="12"></circle>
+<!-- Foreground Ring (Vision) -->
+<circle class="chart-ring transition-all duration-1000" cx="50" cy="50" fill="none" r="40" stroke="#00e3fd" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-md text-headline-md text-secondary-container">78%</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="w-full flex flex-col gap-2 mt-4">
+<div class="flex justify-between items-center bg-white/5 p-2 rounded-sm border-l-2 border-secondary-container">
+<span class="font-data-stream text-data-stream text-on-surface uppercase">Vision Confirmed</span>
+<span class="font-data-stream text-data-stream text-secondary-container">78%</span>
+</div>
+<div class="flex justify-between items-center bg-white/5 p-2 rounded-sm border-l-2 border-white/20">
+<span class="font-data-stream text-data-stream text-on-surface uppercase">Sensor Confirmed</span>
+<span class="font-data-stream text-data-stream text-on-surface-variant">22%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Action Bar -->
+<div class="hud-card p-container-padding flex flex-col gap-stack-sm justify-center bg-surface-container/30 border-white/5">
+<button class="w-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps py-4 rounded-none border border-secondary-container hover:bg-secondary-fixed transition-colors flex items-center justify-center gap-2 uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+                    EXPORT TRIP LOG (CSV/JSON)
+                </button>
+<button class="w-full bg-transparent text-secondary-container font-label-caps text-label-caps py-4 rounded-none border border-secondary-container/50 hover:bg-secondary-container hover:text-on-secondary-container transition-colors flex items-center justify-center gap-2 uppercase tracking-widest">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+                    CLOSE &amp; RETURN TO HOME
+                </button>
+</div>
+</div>
+</div>
+</body></html>

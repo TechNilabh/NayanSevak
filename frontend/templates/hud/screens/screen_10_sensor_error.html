@@ -1,0 +1,62 @@
+<div class="hud-overlay w-full h-full flex flex-col items-center justify-center p-6"><!-- Mock Background for Context (Dimmed) -->
+<div class="absolute inset-0 z-0 bg-surface-container-lowest" data-alt="A dark, abstract visualization of a road or telemetry data, stylized with harsh geometric lines and a deep ultra-dark background. Faint cyan data nodes are scattered across the scene. Brutalist, high-tech, automotive interface aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmCwz1Yfcs_9XdpQyOLkE4BJGqm0AuTKjr5qzrBwYaX5hUUnW7N8lluC87EyH-4mv5x_t3JfFGgfYT7keEvL0JOxCwlRVB6stK298Ys1E6_qCZeRQq1QJ8HwKtuH5sXQagys6nUf7fD-VztG_DwlO2HXX7vyM5EQfP1qWkxY5bd-XOFTOEgrLqDRWyBBDhf-6CskUSAOZz3S0fl-ecD_3Zeb2lq3IsxcKh0S0D1-RTcYVVlHcomI7kmA'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 z-0 scanlines opacity-50 pointer-events-none"></div>
+<!-- SHELL LAYER (Blurred due to Modal) -->
+<div class="absolute inset-0 z-10 filter blur-sm opacity-60 pointer-events-none flex">
+<!-- SideNavBar -->
+
+<!-- Main Content Area Wrapper (for TopAppBar) -->
+<div class="flex-1 ml-20 flex flex-col h-full relative">
+<!-- TopAppBar -->
+
+</div>
+</div>
+<!-- Overlay to ensure dimming -->
+<div class="absolute inset-0 bg-background/70 z-30 pointer-events-none"></div>
+<!-- MODAL LAYER -->
+<main class="absolute inset-0 z-50 flex items-center justify-center p-margin-screen">
+<!-- Glassmorphic Warning Modal -->
+<!-- Note: Using 'error' color as the warning tone to adhere strictly to the Brutalist high-contrast red/alert palette defined in config -->
+<div class="bg-surface-container/90 backdrop-blur-xl border border-error shadow-[0_0_30px_rgba(255,180,171,0.15)] flex flex-col p-stack-lg max-w-3xl w-full relative overflow-hidden">
+<!-- Animated Scanline specific to modal for depth -->
+<div class="absolute inset-0 scanlines opacity-30 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<!-- Icon -->
+<div class="mb-stack-md animate-pulse">
+<span class="material-symbols-outlined text-[64px] text-error">cable</span>
+</div>
+<!-- Headline -->
+<h1 class="font-headline-lg text-headline-lg text-error tracking-widest mb-stack-sm uppercase">
+                    WOKWI SENSOR BRIDGE OFFLINE
+                </h1>
+<!-- Description -->
+<p class="font-body-lg text-body-lg text-on-surface mb-stack-lg max-w-2xl text-on-surface-variant">
+                    Hardware telemetry stream (/dev/ttyUSB0) lost. System has automatically shifted weights to Vision-Only Mode (YOLOv8n). Hazard verification accuracy may drop in low light.
+                </p>
+<!-- Diagnostics Block -->
+<div class="bg-surface-container-lowest border border-white/10 p-container-padding w-full mb-stack-lg text-left relative">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<code class="font-data-stream text-data-stream text-error whitespace-pre-wrap flex flex-col gap-1">
+<span class="text-secondary">SYS_DIAG:</span> STATUS CHECK INITIATED...
+<span class="text-secondary">STREAM:</span> Dashcam: <span class="text-white">ACTIVE (100% Weight)</span>
+<span class="text-secondary">STREAM:</span> Vibration: <span class="text-error">N/A [ERR_TIMEOUT]</span>
+<span class="text-secondary">STREAM:</span> Ultrasonic: <span class="text-error">N/A [ERR_DISCONNECT]</span>
+</code>
+</div>
+<!-- Buttons -->
+<div class="flex flex-col sm:flex-row gap-gutter w-full justify-center mt-auto">
+<button class="bg-error text-on-error font-label-caps text-label-caps py-4 px-8 border border-error hover:bg-error-container hover:text-on-error-container transition-colors duration-200 uppercase tracking-widest active:scale-95">
+                        RETRY SERIAL CONNECTION
+                    </button>
+<button class="bg-transparent text-on-surface font-label-caps text-label-caps py-4 px-8 border border-white/20 hover:bg-white/5 hover:border-white/40 transition-colors duration-200 uppercase tracking-widest active:scale-95">
+                        CONTINUE IN CAMERA-ONLY MODE
+                    </button>
+</div>
+</div>
+<!-- Brutalist decorative corners -->
+<div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-error"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-error"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-error"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-error"></div>
+</div>
+</main></div>

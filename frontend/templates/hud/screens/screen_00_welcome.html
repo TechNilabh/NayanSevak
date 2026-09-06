@@ -1,0 +1,100 @@
+<!-- Screen 00: Pre-Drive Welcome & Ignition Stage -->
+<div class="hud-overlay w-full h-full flex flex-col items-center justify-between p-8 relative overflow-hidden bg-[#0A0C10]">
+
+    <!-- Background Subtle Radial Grid -->
+    <div class="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none">
+        <div class="w-[640px] h-[640px] rounded-full border border-[#00E5FF]/20"></div>
+        <div class="w-[460px] h-[460px] rounded-full border border-[#00E5FF]/30 absolute"></div>
+        <div class="w-[280px] h-[280px] rounded-full border border-[#FFB300]/20 absolute"></div>
+    </div>
+
+    <!-- Header: Ocular Shield Emblem -->
+    <div class="z-10 flex flex-col items-center gap-2 mt-4 text-center">
+        <div class="flex items-center gap-3 px-6 py-2 rounded-full bg-[#12161F]/90 border border-[#00E5FF]/40 shadow-[0_0_20px_rgba(0,229,255,0.15)]">
+            <span class="material-symbols-outlined text-[#00E5FF] text-2xl">shield</span>
+            <span class="font-bold tracking-[0.2em] text-[#00E5FF] text-base font-mono">NAYAN SEVAK AI</span>
+        </div>
+        <p class="text-[11px] text-slate-400 font-mono uppercase tracking-widest mt-1">Autonomous Driver Assistance System v3.4</p>
+    </div>
+
+    <!-- Center Hero Stage: 2.5D Vector Sports Car Silhouette -->
+    <div class="z-10 relative my-auto flex flex-col items-center justify-center">
+        <div class="relative w-[340px] h-[200px] flex items-center justify-center">
+            <!-- Elliptical Radial Floor Grid -->
+            <svg class="absolute inset-0 w-full h-full opacity-50" viewBox="0 0 340 200">
+                <ellipse cx="170" cy="100" rx="150" ry="75" fill="none" stroke="rgba(0, 229, 255, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"/>
+                <ellipse cx="170" cy="100" rx="110" ry="55" fill="none" stroke="rgba(0, 229, 255, 0.3)" stroke-width="1"/>
+                <line x1="20" y1="100" x2="320" y2="100" stroke="rgba(0, 229, 255, 0.2)" stroke-dasharray="4 4"/>
+                <line x1="170" y1="25" x2="170" y2="175" stroke="rgba(0, 229, 255, 0.2)" stroke-dasharray="4 4"/>
+            </svg>
+
+            <!-- Vector Sports Car Wireframe -->
+            <svg class="relative z-10 w-[220px] h-[140px] drop-shadow-[0_0_20px_rgba(0,229,255,0.35)]" viewBox="0 0 200 120">
+                <defs>
+                    <linearGradient id="bodyCyanGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.9"/>
+                        <stop offset="100%" stop-color="#00E5FF" stop-opacity="0.4"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- Body Shell -->
+                <rect x="25" y="30" width="150" height="60" rx="20" fill="rgba(18, 22, 31, 0.95)" stroke="#00E5FF" stroke-width="2"/>
+                
+                <!-- Roof Contour -->
+                <path d="M 55 30 Q 100 15 145 30 L 135 90 Q 100 105 65 90 Z" fill="rgba(0, 229, 255, 0.08)" stroke="url(#bodyCyanGrad)" stroke-width="1.5"/>
+                
+                <!-- Amber Fender Arcs -->
+                <path d="M 25 45 Q 40 40 55 45" stroke="#FFB300" stroke-width="2.5" fill="none"/>
+                <path d="M 25 75 Q 40 80 55 75" stroke="#FFB300" stroke-width="2.5" fill="none"/>
+                <path d="M 145 45 Q 160 40 175 45" stroke="#FFB300" stroke-width="2.5" fill="none"/>
+                <path d="M 145 75 Q 160 80 175 75" stroke="#FFB300" stroke-width="2.5" fill="none"/>
+
+                <!-- Front Headlight Beams -->
+                <polygon points="175,45 200,32 200,58" fill="rgba(0, 229, 255, 0.15)" stroke="#00E5FF" stroke-width="0.5"/>
+                <polygon points="175,75 200,62 200,88" fill="rgba(0, 229, 255, 0.15)" stroke="#00E5FF" stroke-width="0.5"/>
+
+                <!-- Wheels -->
+                <rect x="42" y="20" width="22" height="10" rx="3" fill="#0A0C10" stroke="#00E5FF" stroke-width="1"/>
+                <rect x="136" y="20" width="22" height="10" rx="3" fill="#0A0C10" stroke="#00E5FF" stroke-width="1"/>
+                <rect x="42" y="90" width="22" height="10" rx="3" fill="#0A0C10" stroke="#00E5FF" stroke-width="1"/>
+                <rect x="136" y="90" width="22" height="10" rx="3" fill="#0A0C10" stroke="#00E5FF" stroke-width="1"/>
+
+                <!-- Core Sensor Node -->
+                <circle cx="100" cy="60" r="7" fill="#00E5FF"/>
+            </svg>
+        </div>
+
+        <!-- High-Affordance CTA Button -->
+        <button id="btn-engage-deck" onclick="HUDRouter.navigateTo('screen_07_boot')" class="mt-8 px-10 py-3.5 rounded-full bg-[#00E5FF]/10 hover:bg-[#00E5FF]/25 border-2 border-[#00E5FF] text-[#00E5FF] font-bold text-sm tracking-widest font-mono transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_35px_rgba(0,229,255,0.6)] hover:scale-105 active:scale-95 flex items-center gap-3">
+            <span class="material-symbols-outlined text-xl">power_settings_new</span>
+            ENGAGE FLIGHT DECK
+        </button>
+
+        <p class="text-xs text-slate-400 font-mono mt-3">Click or press brake to initialize multi-modal AI perception</p>
+    </div>
+
+    <!-- Flanking Telemetry Stats Cards -->
+    <div class="z-10 w-full max-w-3xl flex justify-between items-center gap-6 mb-4 font-mono">
+        <!-- Left Card -->
+        <div class="glass-card flex-1 p-4 flex items-center gap-4 bg-[#12161F]/90 border border-white/10 rounded-2xl">
+            <div class="p-3 rounded-xl bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/30">
+                <span class="material-symbols-outlined text-2xl">ev_station</span>
+            </div>
+            <div>
+                <div class="text-[10px] text-slate-400 uppercase">Battery & Tires</div>
+                <div class="text-xs font-bold text-white tabular-nums">EST. RANGE 410 KM · 38 PSI NOMINAL</div>
+            </div>
+        </div>
+
+        <!-- Right Card -->
+        <div class="glass-card flex-1 p-4 flex items-center gap-4 bg-[#12161F]/90 border border-white/10 rounded-2xl">
+            <div class="p-3 rounded-xl bg-[#FFB300]/10 text-[#FFB300] border border-[#FFB300]/30">
+                <span class="material-symbols-outlined text-2xl">memory</span>
+            </div>
+            <div>
+                <div class="text-[10px] text-slate-400 uppercase">Sensors & Perception</div>
+                <div class="text-xs font-bold text-white tabular-nums">YOLOv8n: ARMED · WOKWI: STANDBY</div>
+            </div>
+        </div>
+    </div>
+</div>

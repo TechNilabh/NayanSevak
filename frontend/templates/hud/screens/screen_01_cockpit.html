@@ -1,0 +1,187 @@
+<div class="w-full h-full flex flex-col"><!-- Top App Bar -->
+
+<!-- Side Nav Bar (Left) -->
+
+<!-- Main Dashboard Canvas -->
+<main class="  p-margin-screen h-full flex gap-8">
+<!-- Left Column: Telemetry Gauge -->
+<section class="flex-1 flex flex-col items-center justify-center relative">
+<!-- PRND Selector -->
+<div class="absolute top-0 flex items-center justify-center w-full">
+<div class="glass-card px-6 py-2 rounded-full flex gap-6 font-data-stream text-on-surface-variant text-[14px]">
+<span class="opacity-50">P</span>
+<span class="opacity-50">R</span>
+<span class="opacity-50">N</span>
+<span class="text-background bg-secondary-fixed px-2 py-0.5 rounded shadow-[0_0_10px_#00E5FF] font-bold">D</span>
+</div>
+</div>
+<!-- Central HUD Gauge -->
+<div class="relative w-[340px] h-[340px] mt-8 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full rotate-180" viewbox="0 0 200 200">
+<!-- Background tracks -->
+<circle class="gauge-arc stroke-surface-variant" cx="100" cy="100" r="90" stroke-dasharray="283 283" stroke-dashoffset="0" stroke-width="4"></circle>
+<!-- Cyan Arc (YOLO) -->
+<circle class="gauge-arc stroke-secondary-fixed" cx="100" cy="100" r="90" stroke-dasharray="200 283" stroke-dashoffset="0" stroke-width="8" style="filter: drop-shadow(0 0 4px #00E5FF);"></circle>
+<!-- Orange Arc (Sensor) -->
+<circle class="gauge-arc stroke-orange-500" cx="100" cy="100" r="75" stroke-dasharray="40 283" stroke-dashoffset="243" stroke-width="4"></circle>
+</svg>
+<div class="flex flex-col items-center justify-center z-10 text-center">
+<span class="font-data-stream text-secondary-fixed-dim uppercase tracking-widest mb-2">FUSION CONFIDENCE</span>
+<div class="font-speed-display tabular-nums text-[110px] leading-[100px] text-white">92</div>
+<div class="flex gap-4 mt-4 text-[10px] font-data-stream uppercase">
+<span class="text-secondary-fixed flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-secondary-fixed"></div>YOLO Vision 88%</span>
+<span class="text-orange-500 flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-orange-500"></div>Sensor Wgt 12%</span>
+</div>
+</div>
+</div>
+<!-- Sub Metrics -->
+<div class="glass-card mt-8 px-6 py-4 w-[80%] flex justify-between items-center text-center">
+<div>
+<div class="font-data-stream text-on-surface-variant text-[10px] uppercase mb-1">AI FPS</div>
+<div class="font-label-caps tabular-nums text-white text-[16px]">34</div>
+</div>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div>
+<div class="font-data-stream text-on-surface-variant text-[10px] uppercase mb-1">Weather</div>
+<div class="font-label-caps text-white text-[16px]">CLEAR</div>
+</div>
+</div>
+</section>
+<!-- Center Column: Vehicle Dynamics & Radar -->
+<section class="flex-1 relative flex items-center justify-center border-x border-outline-variant/30">
+<!-- Detailed Car Silhouette -->
+<div class="relative w-32 h-64 flex items-center justify-center drop-shadow-2xl">
+<!-- SVG Detailed Car -->
+<svg class="absolute inset-0 w-full h-full drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" style="filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.4));" viewbox="0 0 100 200">
+<defs>
+<lineargradient id="bodyGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2a2d35"></stop>
+<stop offset="100%" stop-color="#15171c"></stop>
+</lineargradient>
+<lineargradient id="glassGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0c0e12"></stop>
+<stop offset="100%" stop-color="#1e2024"></stop>
+</lineargradient>
+</defs>
+<!-- Ambient Shadow -->
+<ellipse cx="50" cy="100" fill="rgba(0,0,0,0.6)" rx="45" ry="95"></ellipse>
+<!-- Main Body Base -->
+<rect fill="url(#bodyGrad)" height="180" rx="30" stroke="#00E5FF" stroke-width="1.5" width="70" x="15" y="10"></rect>
+<!-- Panel Lines (Hood & Trunk) -->
+<path d="M 22 45 Q 50 55 78 45 M 22 155 Q 50 145 78 155" fill="none" opacity="0.3" stroke="#00E5FF" stroke-width="1"></path>
+<path d="M 28 10 L 28 45 M 72 10 L 72 45 M 28 155 L 28 190 M 72 155 L 72 190" fill="none" opacity="0.4" stroke="#111" stroke-width="1"></path>
+<!-- Wheel Wells -->
+<rect fill="#000" height="24" rx="4" width="8" x="11" y="30"></rect>
+<rect fill="#000" height="24" rx="4" width="8" x="81" y="30"></rect>
+<rect fill="#000" height="24" rx="4" width="8" x="11" y="145"></rect>
+<rect fill="#000" height="24" rx="4" width="8" x="81" y="145"></rect>
+<!-- Windshield -->
+<path d="M 22 55 Q 50 45 78 55 L 72 85 Q 50 90 28 85 Z" fill="url(#glassGrad)" stroke="#333" stroke-width="1"></path>
+<!-- Rear Window -->
+<path d="M 26 145 Q 50 152 74 145 L 68 125 Q 50 120 32 125 Z" fill="url(#glassGrad)" stroke="#333" stroke-width="1"></path>
+<!-- Roof -->
+<rect fill="#1e2024" height="40" rx="8" stroke="#111" stroke-width="1" width="44" x="28" y="85"></rect>
+</svg>
+<!-- Headlight radar cones -->
+<div class="absolute -top-16 left-2 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[80px] border-b-secondary-fixed/30 origin-bottom opacity-70 animate-pulse" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); transform: rotate(-20deg);"></div>
+<div class="absolute -top-16 right-2 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[80px] border-b-secondary-fixed/30 origin-bottom opacity-70 animate-pulse" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); transform: rotate(20deg);"></div>
+<!-- Front Bumper Radar arcs -->
+<svg class="absolute -top-12 w-48 h-24" viewbox="0 0 100 50">
+<path class="opacity-50" d="M 10,40 Q 50,0 90,40" fill="none" stroke="#00E5FF" stroke-width="2"></path>
+<path class="opacity-30" d="M 20,45 Q 50,15 80,45" fill="none" stroke="#00E5FF" stroke-width="1"></path>
+</svg>
+<!-- Rear Bumper Danger Arc -->
+<svg class="absolute -bottom-8 w-32 h-16" viewbox="0 0 100 50">
+<path d="M 10,10 Q 50,50 90,10" fill="none" stroke="#ff1744" stroke-width="4" style="filter: drop-shadow(0 0 4px #ff1744);"></path>
+</svg>
+<div class="absolute top-0 right-0 w-3 h-1 bg-secondary-fixed shadow-[0_0_8px_#00E5FF]"></div>
+<div class="absolute top-0 left-0 w-3 h-1 bg-secondary-fixed shadow-[0_0_8px_#00E5FF]"></div>
+<div class="absolute bottom-0 right-0 w-4 h-1 bg-primary shadow-[0_0_8px_#ff1744]"></div>
+<div class="absolute bottom-0 left-0 w-4 h-1 bg-primary shadow-[0_0_8px_#ff1744]"></div>
+<!-- Distance Labels -->
+<div class="absolute -top-16 text-secondary-fixed font-data-stream text-[10px]">142 cm</div>
+<div class="absolute -bottom-12 text-primary font-data-stream text-[10px]">38 cm</div>
+</div>
+<!-- Side Sensors -->
+<div class="absolute left-12 top-1/2 -translate-y-1/2 text-on-surface-variant font-data-stream text-[10px] flex items-center gap-2">
+                38 PSI <div class="w-4 h-px bg-surface-variant"></div>
+</div>
+<div class="absolute right-12 top-1/2 -translate-y-1/2 text-on-surface-variant font-data-stream text-[10px] flex items-center gap-2">
+<div class="w-4 h-px bg-surface-variant"></div> 38 PSI
+            </div>
+</section>
+<!-- Right Column: Information Tiles -->
+<section class="flex-1 flex flex-col gap-4">
+<!-- Live Dashcam Feed -->
+<div class="glass-card flex-1 p-container-padding relative overflow-hidden group">
+<div class="absolute inset-0 bg-surface-container-high opacity-50"></div>
+<!-- Simulating a camera feed context -->
+<div class="absolute inset-0 border border-secondary-fixed/20 m-2">
+<div class="absolute top-1/2 left-1/2 w-16 h-16 border-2 border-secondary-fixed -translate-x-1/2 -translate-y-1/2 opacity-50">
+<div class="w-2 h-2 border-t-2 border-l-2 border-secondary-fixed absolute -top-1 -left-1"></div>
+<div class="w-2 h-2 border-b-2 border-r-2 border-secondary-fixed absolute -bottom-1 -right-1"></div>
+</div>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-secondary-fixed text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">videocam</span> LIVE DASHCAM
+                        </span>
+<div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+</div>
+<div class="bg-primary/20 border border-primary px-3 py-1.5 w-fit rounded backdrop-blur-sm">
+<span class="font-data-stream text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span> Next: Pothole Ahead
+                        </span>
+</div>
+</div>
+</div>
+<!-- Hazard Log -->
+<div class="glass-card flex-1 p-container-padding flex flex-col">
+<div class="font-label-caps text-on-surface-variant text-[10px] mb-4">RECENT HAZARD LOG</div>
+<div class="space-y-3 flex-1 overflow-y-auto pr-2" style="scrollbar-width: thin; scrollbar-color: #333539 transparent;">
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-2">
+<span class="material-symbols-outlined text-orange-400 text-[18px]">pedal_bike</span>
+<div class="flex-1">
+<div class="font-data-stream text-white">Cyclist Detected</div>
+<div class="font-data-stream text-on-surface-variant text-[9px]">20m | Right Lane</div>
+</div>
+<span class="font-data-stream text-on-surface-variant text-[9px]">-12s</span>
+</div>
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-2">
+<span class="material-symbols-outlined text-primary text-[18px]">traffic</span>
+<div class="flex-1">
+<div class="font-data-stream text-white">Hard Braking Vehicle</div>
+<div class="font-data-stream text-on-surface-variant text-[9px]">45m | Center</div>
+</div>
+<span class="font-data-stream text-on-surface-variant text-[9px]">-42s</span>
+</div>
+<div class="flex items-center gap-3 border-b border-outline-variant/30 pb-2 opacity-50">
+<span class="material-symbols-outlined text-secondary-fixed text-[18px]">pets</span>
+<div class="flex-1">
+<div class="font-data-stream text-white">Small Animal</div>
+<div class="font-data-stream text-on-surface-variant text-[9px]">Cleared</div>
+</div>
+<span class="font-data-stream text-on-surface-variant text-[9px]">-2m</span>
+</div>
+</div>
+</div>
+<!-- Fusion Engine Status -->
+<div class="glass-card flex-1 p-container-padding flex flex-col justify-between">
+<div class="font-label-caps text-on-surface-variant text-[10px]">FUSION ENGINE STATUS</div>
+<div class="flex justify-between items-center mt-2">
+<span class="font-data-stream text-white text-[14px]">AUTO-BALANCED</span>
+<span class="material-symbols-outlined text-secondary-fixed">sync_alt</span>
+</div>
+<div class="mt-4 flex gap-1 h-2 w-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-secondary-fixed" style="width: 88%;"></div>
+<div class="h-full bg-orange-500" style="width: 12%;"></div>
+</div>
+<div class="flex justify-between mt-1 font-data-stream text-[9px] text-on-surface-variant">
+<span class="">Camera 88%</span>
+<span class="">Radar/LiDAR 12%</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Bar --></div>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nayan Sevak - Hardware Fallback</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Scanline Effect for Background */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001f24",
+                        "surface-dim": "#111318",
+                        "secondary-fixed": "#9cf0ff",
+                        "tertiary-fixed": "#d8e2ff",
+                        "primary-container": "#ff525f",
+                        "on-primary-container": "#5b0011",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary-fixed": "#001a43",
+                        "surface": "#111318",
+                        "on-secondary": "#00363d",
+                        "surface-container-high": "#282a2e",
+                        "surface-container-highest": "#333539",
+                        "surface-variant": "#333539",
+                        "surface-container-low": "#1a1c20",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "on-tertiary-fixed-variant": "#004397",
+                        "on-secondary-container": "#00616d",
+                        "on-surface": "#e2e2e8",
+                        "surface-container": "#1e2024",
+                        "tertiary-container": "#508eff",
+                        "on-primary-fixed": "#400009",
+                        "on-primary": "#680014",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-surface-variant": "#e8bcbb",
+                        "on-background": "#e2e2e8",
+                        "inverse-on-surface": "#2f3035",
+                        "tertiary-fixed-dim": "#aec6ff",
+                        "primary": "#ffb3b3",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#00daf3",
+                        "surface-bright": "#37393e",
+                        "surface-tint": "#ffb3b3",
+                        "on-primary-fixed-variant": "#920021",
+                        "on-tertiary": "#002e6b",
+                        "secondary-container": "#00e3fd",
+                        "on-error": "#690005",
+                        "outline": "#ae8787",
+                        "outline-variant": "#5e3f3e",
+                        "inverse-primary": "#bf002e",
+                        "on-tertiary-container": "#00275e",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#aec6ff",
+                        "primary-fixed-dim": "#ffb3b3",
+                        "background": "#111318",
+                        "primary-fixed": "#ffdad9",
+                        "secondary": "#bdf4ff",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "unit": "4px",
+                        "margin-screen": "32px",
+                        "gutter": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "data-stream": ["JetBrains Mono"],
+                        "speed-display": ["Space Grotesk"],
+                        "headline-md": ["Space Grotesk"],
+                        "body-lg": ["JetBrains Mono"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg": ["Space Grotesk"]
+                    },
+                    "fontSize": {
+                        "data-stream": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "speed-display": ["120px", { "lineHeight": "120px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden relative font-body-md select-none">
+<!-- Mock Background for Context (Dimmed) -->
+<div class="absolute inset-0 z-0 bg-surface-container-lowest" data-alt="A dark, abstract visualization of a road or telemetry data, stylized with harsh geometric lines and a deep ultra-dark background. Faint cyan data nodes are scattered across the scene. Brutalist, high-tech, automotive interface aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmCwz1Yfcs_9XdpQyOLkE4BJGqm0AuTKjr5qzrBwYaX5hUUnW7N8lluC87EyH-4mv5x_t3JfFGgfYT7keEvL0JOxCwlRVB6stK298Ys1E6_qCZeRQq1QJ8HwKtuH5sXQagys6nUf7fD-VztG_DwlO2HXX7vyM5EQfP1qWkxY5bd-XOFTOEgrLqDRWyBBDhf-6CskUSAOZz3S0fl-ecD_3Zeb2lq3IsxcKh0S0D1-RTcYVVlHcomI7kmA'); background-size: cover; background-position: center;"></div>
+<div class="absolute inset-0 z-0 scanlines opacity-50 pointer-events-none"></div>
+<!-- SHELL LAYER (Blurred due to Modal) -->
+<div class="absolute inset-0 z-10 filter blur-sm opacity-60 pointer-events-none flex">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container docked left-0 top-1/4 h-1/2 w-20 rounded-r-xl border-r border-white/10 bg-surface-container/60 backdrop-blur-xl flat no shadows fixed left-0 top-0 h-full flex flex-col items-center py-stack-lg gap-gutter z-20">
+<div class="mb-stack-lg flex flex-col items-center">
+<span class="material-symbols-outlined text-[32px] text-secondary-container mb-2">memory</span>
+<span class="font-data-stream text-data-stream text-secondary-container">NAV-01</span>
+</div>
+<!-- Dashboard (Active) -->
+<a class="flex flex-col items-center justify-center text-secondary-container shadow-[0_0_15px_rgba(0,227,253,0.3)] bg-secondary-container/10 border-r-4 border-secondary-container w-full py-4 transition-transform duration-300 ease-out hover:scale-110" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps text-[10px]">Dashboard</span>
+</a>
+<!-- Map -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-full py-4 transition-transform duration-300 ease-out hover:scale-110 hover:text-secondary-container hover:bg-white/5" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1" data-icon="map">map</span>
+<span class="font-label-caps text-label-caps text-[10px]">Map</span>
+</a>
+<!-- Logs -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-full py-4 transition-transform duration-300 ease-out hover:scale-110 hover:text-secondary-container hover:bg-white/5" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1" data-icon="terminal">terminal</span>
+<span class="font-label-caps text-label-caps text-[10px]">Logs</span>
+</a>
+<!-- Settings -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-full py-4 transition-transform duration-300 ease-out hover:scale-110 hover:text-secondary-container hover:bg-white/5 mt-auto" href="#">
+<span class="material-symbols-outlined text-[24px] mb-1" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps text-[10px]">Settings</span>
+</a>
+</nav>
+<!-- Main Content Area Wrapper (for TopAppBar) -->
+<div class="flex-1 ml-20 flex flex-col h-full relative">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface docked full-width top-0 h-12 border-b border-white/10 bg-surface/80 backdrop-blur-md flat no shadows flex justify-between items-center w-full px-margin-screen max-w-full z-20 absolute top-0 left-0">
+<div class="flex items-center gap-4">
+<span class="font-speed-display text-headline-md font-bold text-on-surface tracking-tighter">NAYAN SEVAK</span>
+</div>
+<nav class="flex h-full hidden md:flex">
+<a class="h-full px-4 flex items-center justify-center text-on-surface-variant font-medium hover:text-secondary-fixed hover:bg-white/5 transition-all duration-200 active:scale-95 font-label-caps text-label-caps" href="#">P</a>
+<a class="h-full px-4 flex items-center justify-center text-on-surface-variant font-medium hover:text-secondary-fixed hover:bg-white/5 transition-all duration-200 active:scale-95 font-label-caps text-label-caps" href="#">R</a>
+<a class="h-full px-4 flex items-center justify-center text-on-surface-variant font-medium hover:text-secondary-fixed hover:bg-white/5 transition-all duration-200 active:scale-95 font-label-caps text-label-caps" href="#">N</a>
+<a class="h-full px-4 flex items-center justify-center text-secondary-container font-bold border-b-2 border-secondary-container transition-all duration-200 active:scale-95 font-label-caps text-label-caps" href="#">D</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 text-secondary-container dark:text-secondary-container hover:bg-white/5 rounded transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+</button>
+<button class="p-2 text-secondary-container dark:text-secondary-container hover:bg-white/5 rounded transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="aqi">stream_apps</span>
+</button>
+<button class="p-2 text-secondary-container dark:text-secondary-container hover:bg-white/5 rounded transition-all duration-200 active:scale-95">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+</button>
+</div>
+</header>
+</div>
+</div>
+<!-- Overlay to ensure dimming -->
+<div class="absolute inset-0 bg-background/70 z-30 pointer-events-none"></div>
+<!-- MODAL LAYER -->
+<main class="absolute inset-0 z-50 flex items-center justify-center p-margin-screen">
+<!-- Glassmorphic Warning Modal -->
+<!-- Note: Using 'error' color as the warning tone to adhere strictly to the Brutalist high-contrast red/alert palette defined in config -->
+<div class="bg-surface-container/90 backdrop-blur-xl border border-error shadow-[0_0_30px_rgba(255,180,171,0.15)] flex flex-col p-stack-lg max-w-3xl w-full relative overflow-hidden">
+<!-- Animated Scanline specific to modal for depth -->
+<div class="absolute inset-0 scanlines opacity-30 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center text-center">
+<!-- Icon -->
+<div class="mb-stack-md animate-pulse">
+<span class="material-symbols-outlined text-[64px] text-error">cable</span>
+</div>
+<!-- Headline -->
+<h1 class="font-headline-lg text-headline-lg text-error tracking-widest mb-stack-sm uppercase">
+                    WOKWI SENSOR BRIDGE OFFLINE
+                </h1>
+<!-- Description -->
+<p class="font-body-lg text-body-lg text-on-surface mb-stack-lg max-w-2xl text-on-surface-variant">
+                    Hardware telemetry stream (/dev/ttyUSB0) lost. System has automatically shifted weights to Vision-Only Mode (YOLOv8n). Hazard verification accuracy may drop in low light.
+                </p>
+<!-- Diagnostics Block -->
+<div class="bg-surface-container-lowest border border-white/10 p-container-padding w-full mb-stack-lg text-left relative">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<code class="font-data-stream text-data-stream text-error whitespace-pre-wrap flex flex-col gap-1">
+<span class="text-secondary">SYS_DIAG:</span> STATUS CHECK INITIATED...
+<span class="text-secondary">STREAM:</span> Dashcam: <span class="text-white">ACTIVE (100% Weight)</span>
+<span class="text-secondary">STREAM:</span> Vibration: <span class="text-error">N/A [ERR_TIMEOUT]</span>
+<span class="text-secondary">STREAM:</span> Ultrasonic: <span class="text-error">N/A [ERR_DISCONNECT]</span>
+</code>
+</div>
+<!-- Buttons -->
+<div class="flex flex-col sm:flex-row gap-gutter w-full justify-center mt-auto">
+<button class="bg-error text-on-error font-label-caps text-label-caps py-4 px-8 border border-error hover:bg-error-container hover:text-on-error-container transition-colors duration-200 uppercase tracking-widest active:scale-95">
+                        RETRY SERIAL CONNECTION
+                    </button>
+<button class="bg-transparent text-on-surface font-label-caps text-label-caps py-4 px-8 border border-white/20 hover:bg-white/5 hover:border-white/40 transition-colors duration-200 uppercase tracking-widest active:scale-95">
+                        CONTINUE IN CAMERA-ONLY MODE
+                    </button>
+</div>
+</div>
+<!-- Brutalist decorative corners -->
+<div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-error"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-error"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-error"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-error"></div>
+</div>
+</main>
+</body></html>

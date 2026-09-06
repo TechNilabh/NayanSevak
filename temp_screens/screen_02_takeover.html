@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>High-Threat Hazard Alert</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface-variant": "#e8bcbb",
+                      "inverse-on-surface": "#2f3035",
+                      "tertiary": "#aec6ff",
+                      "tertiary-container": "#508eff",
+                      "surface-variant": "#333539",
+                      "secondary": "#bdf4ff",
+                      "surface-tint": "#ffb3b3",
+                      "error-container": "#93000a",
+                      "primary": "#ffb3b3",
+                      "surface-container-highest": "#333539",
+                      "surface-dim": "#111318",
+                      "secondary-container": "#00e3fd",
+                      "on-secondary-fixed": "#001f24",
+                      "secondary-fixed-dim": "#00daf3",
+                      "on-tertiary": "#002e6b",
+                      "on-secondary": "#00363d",
+                      "tertiary-fixed-dim": "#aec6ff",
+                      "surface": "#111318",
+                      "on-error": "#690005",
+                      "on-secondary-container": "#00616d",
+                      "background": "#0a0c10", /* Overridden for brutalist aesthetic */
+                      "surface-container-high": "#282a2e",
+                      "inverse-surface": "#e2e2e8",
+                      "outline-variant": "#5e3f3e",
+                      "inverse-primary": "#bf002e",
+                      "error": "#ff1744", /* Alert red */
+                      "on-tertiary-fixed-variant": "#004397",
+                      "primary-fixed-dim": "#ffb3b3",
+                      "on-tertiary-container": "#00275e",
+                      "surface-container-lowest": "#12161f", /* Container base */
+                      "on-error-container": "#ffdad6",
+                      "on-primary-container": "#5b0011",
+                      "on-primary-fixed-variant": "#920021",
+                      "on-tertiary-fixed": "#001a43",
+                      "on-secondary-fixed-variant": "#004f58",
+                      "outline": "#ae8787",
+                      "tertiary-fixed": "#d8e2ff",
+                      "primary-fixed": "#ffdad9",
+                      "surface-container": "#1e2024",
+                      "on-background": "#e2e2e8",
+                      "secondary-fixed": "#9cf0ff",
+                      "on-primary-fixed": "#400009",
+                      "surface-bright": "#37393e",
+                      "on-primary": "#680014",
+                      "primary-container": "#ff525f",
+                      "on-surface": "#e2e2e8",
+                      "surface-container-low": "#1a1c20"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-screen": "32px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "container-padding": "20px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "data-stream": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "body-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "speed-display": [
+                              "Space Grotesk"
+                      ],
+                      "body-md": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "data-stream": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "speed-display": [
+                              "120px",
+                              {
+                                      "lineHeight": "120px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        /* Pulse Animation for Vignette */
+        @keyframes pulse-vignette {
+            0% { box-shadow: inset 0 0 50px rgba(255, 23, 68, 0.2); border-color: rgba(255, 23, 68, 0.3); }
+            50% { box-shadow: inset 0 0 150px rgba(255, 23, 68, 0.6); border-color: rgba(255, 23, 68, 0.8); }
+            100% { box-shadow: inset 0 0 50px rgba(255, 23, 68, 0.2); border-color: rgba(255, 23, 68, 0.3); }
+        }
+        .vignette-alert {
+            animation: pulse-vignette 1.5s infinite;
+            border: 2px solid rgba(255, 23, 68, 0.5);
+        }
+
+        /* Pulse Animation for Rings */
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .ring-1 { animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1); }
+        .ring-2 { animation: pulse-ring 2s infinite 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
+        .ring-3 { animation: pulse-ring 2s infinite 1s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+        /* Glitch effect for text */
+        .glitch-text {
+            text-shadow: 0 0 10px rgba(255, 23, 68, 0.8);
+        }
+      </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen w-screen overflow-hidden flex flex-col justify-center items-center relative">
+<!-- Global Vignette Overlay -->
+<div class="absolute inset-0 pointer-events-none vignette-alert z-50 rounded-lg m-2"></div>
+<!-- Central Alert HUD -->
+<main class="w-full h-full flex flex-col items-center justify-center p-margin-screen relative z-10 space-y-stack-lg">
+<!-- Hazard Visualizer -->
+<div class="relative flex items-center justify-center w-64 h-64 mb-stack-md">
+<!-- Concentric Rings -->
+<div class="absolute inset-0 rounded-full border border-error/50 ring-1"></div>
+<div class="absolute inset-0 rounded-full border border-error/30 ring-2"></div>
+<div class="absolute inset-0 rounded-full border border-error/10 ring-3"></div>
+<!-- Core Icon -->
+<div class="relative z-10 bg-error/20 rounded-full p-8 border border-error shadow-[0_0_40px_rgba(255,23,68,0.6)]">
+<span class="material-symbols-outlined text-[80px] text-error" style="font-variation-settings: 'FILL' 1;">
+                    warning
+                </span>
+</div>
+</div>
+<!-- Typography Cluster -->
+<div class="text-center flex flex-col items-center space-y-stack-sm">
+<h1 class="text-error font-headline-lg text-headline-lg tracking-widest glitch-text uppercase">
+                POTHOLE DETECTED
+            </h1>
+<div class="font-speed-display text-speed-display text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] flex items-baseline">
+                32<span class="text-headline-lg font-headline-lg ml-2 text-on-surface-variant">m</span>
+</div>
+</div>
+<!-- Telemetry Sub-cards (Bento-style layout for data) -->
+<div class="grid grid-cols-2 gap-gutter w-full max-w-4xl mt-stack-md">
+<!-- Z-Axis Data -->
+<div class="bg-surface-container-lowest border border-white/10 rounded-[16px] p-container-padding flex flex-col justify-center items-center relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error/80"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-unit tracking-widest uppercase">Z-Axis Shock</span>
+<span class="font-headline-md text-headline-md text-error font-bold">+2.4G PREDICTED</span>
+</div>
+<!-- Recommendation Data -->
+<div class="bg-surface-container-lowest border border-white/10 rounded-[16px] p-container-padding flex flex-col justify-center items-center relative overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-1 bg-secondary-container/80"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-unit tracking-widest uppercase">Recommended Speed</span>
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">&lt; 30 KM/H</span>
+</div>
+</div>
+<!-- Action Area -->
+<div class="flex gap-gutter w-full max-w-4xl mt-stack-lg z-20">
+<button class="flex-1 bg-transparent border border-error text-error font-label-caps text-label-caps py-6 uppercase tracking-widest hover:bg-error/10 transition-colors duration-200" onclick="window.location.href='index.html'">
+                Dismiss
+            </button>
+<button class="flex-1 bg-error text-black font-label-caps text-label-caps py-6 uppercase tracking-widest shadow-[0_0_20px_rgba(255,23,68,0.4)] hover:bg-white hover:text-black hover:shadow-[0_0_30px_rgba(255,255,255,0.8)] transition-all duration-200" onclick="window.location.href='index.html'">
+                Slow Down Acknowledged
+            </button>
+</div>
+</main>
+<!-- Top App Bar (Suppressed as per rules for linear/transactional/alert screens, but adding ambient top status data) -->
+<div class="fixed top-0 left-0 w-full p-margin-screen flex justify-between items-start pointer-events-none opacity-50">
+<div class="font-data-stream text-data-stream text-error">SYS_ALERT_ID: 0x8F92</div>
+<div class="font-data-stream text-data-stream text-error animate-pulse">EMERGENCY OVERRIDE ENGAGED</div>
+</div>
+</body></html>

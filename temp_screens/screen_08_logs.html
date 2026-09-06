@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alert History &amp; Notification Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#ffb3b3",
+                        "surface-tint": "#ffb3b3",
+                        "surface-container-high": "#282a2e",
+                        "on-primary": "#680014",
+                        "outline": "#ae8787",
+                        "on-error": "#690005",
+                        "surface-dim": "#111318",
+                        "primary-container": "#ff525f",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#aec6ff",
+                        "tertiary-container": "#508eff",
+                        "on-primary-container": "#5b0011",
+                        "secondary": "#bdf4ff",
+                        "outline-variant": "#5e3f3e",
+                        "secondary-fixed-dim": "#00daf3",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004397",
+                        "secondary-fixed": "#9cf0ff",
+                        "inverse-primary": "#bf002e",
+                        "surface-container-low": "#1a1c20",
+                        "on-secondary-container": "#00616d",
+                        "on-primary-fixed": "#400009",
+                        "surface-bright": "#37393e",
+                        "primary-fixed-dim": "#ffb3b3",
+                        "surface-container-lowest": "#0c0e12",
+                        "error-container": "#93000a",
+                        "surface-variant": "#333539",
+                        "secondary-container": "#00e3fd",
+                        "on-surface": "#e2e2e8",
+                        "on-tertiary-fixed": "#001a43",
+                        "surface-container": "#1e2024",
+                        "surface": "#111318",
+                        "surface-container-highest": "#333539",
+                        "on-background": "#e2e2e8",
+                        "on-tertiary": "#002e6b",
+                        "on-tertiary-container": "#00275e",
+                        "inverse-surface": "#e2e2e8",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#ffdad9",
+                        "background": "#111318",
+                        "on-surface-variant": "#e8bcbb",
+                        "tertiary": "#aec6ff",
+                        "on-secondary": "#00363d",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "tertiary-fixed": "#d8e2ff",
+                        "on-primary-fixed-variant": "#920021",
+                        "on-secondary-fixed": "#001f24"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "gutter": "16px",
+                        "margin-screen": "32px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "data-stream": ["JetBrains Mono"],
+                        "headline-md": ["Space Grotesk"],
+                        "body-lg": ["JetBrains Mono"],
+                        "speed-display": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "data-stream": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "speed-display": ["120px", { "lineHeight": "120px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10; /* Brutalist Ultra-Dark */
+        }
+        .hud-card {
+            background-color: #12161F;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+        }
+        .tactile-button {
+            border-radius: 0;
+            border: 1px solid theme('colors.secondary-fixed-dim');
+            background-color: transparent;
+            color: theme('colors.secondary-fixed-dim');
+            transition: all 0.2s ease-in-out;
+        }
+        .tactile-button:hover, .tactile-button.active {
+            background-color: theme('colors.secondary-fixed-dim');
+            color: #0A0C10;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen flex flex-col font-body-md overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest docked full-width top-0 h-16 border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-margin-screen z-50">
+<div class="font-headline-lg text-headline-lg text-primary tracking-tighter">NAYAN SEVAK</div>
+<div class="flex items-center gap-stack-md text-secondary">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+<span class="material-symbols-outlined" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low/80 fixed left-margin-screen top-1/2 -translate-y-1/2 w-20 rounded-full py-stack-lg border border-white/10 backdrop-blur-md shadow-[0_0_15px_rgba(0,218,243,0.2)] flex flex-col items-center gap-stack-lg z-40 hidden md:flex">
+<div class="flex flex-col items-center gap-unit">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center font-headline-md text-on-secondary-container">D</div>
+<span class="font-data-stream text-data-stream text-secondary-fixed-dim">DRIVE</span>
+</div>
+<a class="text-outline p-stack-sm hover:text-secondary transition-all duration-300 flex flex-col items-center gap-unit" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-data-stream text-data-stream sr-only">Dashboard</span>
+</a>
+<a class="text-outline p-stack-sm hover:text-secondary transition-all duration-300 flex flex-col items-center gap-unit" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-data-stream text-data-stream sr-only">Map</span>
+</a>
+<a class="bg-secondary text-on-secondary rounded-full p-stack-sm shadow-[0_0_10px_#00daf3] flex flex-col items-center gap-unit Active: scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="font-data-stream text-data-stream sr-only">Logs</span>
+</a>
+<a class="text-outline p-stack-sm hover:text-secondary transition-all duration-300 flex flex-col items-center gap-unit" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-data-stream text-data-stream sr-only">Settings</span>
+</a>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col ml-0 md:ml-[120px] p-margin-screen gap-stack-lg overflow-y-auto">
+<!-- Page Header -->
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-stack-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-background">HAZARD LOGS &amp; INCIDENT HISTORY</h1>
+<div class="flex gap-gutter">
+<button class="tactile-button active px-4 py-2 font-label-caps text-label-caps">ALL</button>
+<button class="tactile-button px-4 py-2 font-label-caps text-label-caps">POTHOLES</button>
+<button class="tactile-button px-4 py-2 font-label-caps text-label-caps">ROAD SIGNS</button>
+<button class="tactile-button px-4 py-2 font-label-caps text-label-caps">OBSTACLES</button>
+</div>
+</div>
+<button class="tactile-button px-6 py-3 font-label-caps text-label-caps flex items-center gap-unit">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                    BACK TO COCKPIT
+                </button>
+</div>
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-stack-lg flex-1 min-h-0">
+<!-- History Table (Left Column) -->
+<div class="lg:col-span-2 hud-card p-container-padding flex flex-col gap-stack-md overflow-hidden">
+<div class="grid grid-cols-5 gap-4 border-b border-white/10 pb-2 font-label-caps text-label-caps text-outline mb-2">
+<div class="col-span-1">TIMESTAMP</div>
+<div class="col-span-2">HAZARD TYPE</div>
+<div class="col-span-1">METRICS</div>
+<div class="col-span-1 text-right">SEVERITY</div>
+</div>
+<div class="overflow-y-auto flex-1 pr-2 flex flex-col gap-2">
+<!-- Row 1 -->
+<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 border-error cursor-pointer">
+<div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">14:02:45.102</div>
+<div class="col-span-2 flex items-center gap-3">
+<span class="material-symbols-outlined text-error">warning</span>
+<span class="font-label-caps text-label-caps text-on-surface">SEVERE POTHOLE</span>
+</div>
+<div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">
+                                45M <span class="text-on-surface-variant">|</span> 92%
+                            </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-1 bg-error/20 text-error border border-error/30 font-label-caps text-[10px] tracking-wider">CRITICAL</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 border-[#FFC107] cursor-pointer">
+<div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">13:58:12.884</div>
+<div class="col-span-2 flex items-center gap-3">
+<span class="material-symbols-outlined text-[#FFC107]">construction</span>
+<span class="font-label-caps text-label-caps text-on-surface">DEBRIS DETECTED</span>
+</div>
+<div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">
+                                120M <span class="text-on-surface-variant">|</span> 78%
+                            </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-1 bg-[#FFC107]/20 text-[#FFC107] border border-[#FFC107]/30 font-label-caps text-[10px] tracking-wider">MODERATE</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 border-secondary-fixed-dim cursor-pointer">
+<div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">13:45:01.300</div>
+<div class="col-span-2 flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim">speed</span>
+<span class="font-label-caps text-label-caps text-on-surface">SPEED LIMIT CHANGE</span>
+</div>
+<div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">
+                                5M <span class="text-on-surface-variant">|</span> 99%
+                            </div>
+<div class="col-span-1 text-right">
+<span class="px-2 py-1 bg-secondary-fixed-dim/20 text-secondary-fixed-dim border border-secondary-fixed-dim/30 font-label-caps text-[10px] tracking-wider">INFO</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Card (Right Column) -->
+<div class="lg:col-span-1 hud-card p-container-padding flex flex-col gap-stack-md border-error shadow-[0_0_15px_rgba(255,23,68,0.2)]">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-caps text-label-caps text-on-surface">INCIDENT DETAILS</span>
+<span class="font-data-stream text-data-stream text-error blinking">ID: HZ-9942A</span>
+</div>
+<div class="relative w-full h-48 bg-surface border border-white/10 flex items-center justify-center overflow-hidden group">
+<img class="w-full h-full object-cover opacity-80 mix-blend-screen" data-alt="A high-contrast, brutalist UI style dashcam snapshot of a severe road pothole. The image is a tight crop, showing the jagged edges of the asphalt defect. Overlaid on the image are glowing cyan geometric bounding boxes and scanning lines indicating AI detection, typical of a high-tech vehicle HUD. The overall lighting is dark and moody, simulating a nighttime or low-light driving environment with synthetic sensor enhancements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2YeKt34cEuudGonOWh2mM9v_2jOtoUO28GaeYv_V80l53w0EpHnm3bz3tE7oV6QDzND2NM0wjq5JYtYW9906zKEXAgbIWeGfLSN4eywSNUbnItz1A3XcuCBVdNPcVZbGJWRd2a0Ul90h9uh074fFuQ86Wt9xFD-00AnSdvHoDaR6rKplYm8QYUtSLBaRVh6x4ZA9tymBsb6XH8TfNzQNq7mQzMhtXcYwTURoELk3UX4BvxmsQ2Md7bg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+<div class="absolute top-2 left-2 bg-error text-on-error font-label-caps text-[10px] px-1 py-0.5">FOV: CAM_FRONT</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<div class="font-label-caps text-[10px] text-outline mb-1">LATITUDE</div>
+<div class="font-data-stream text-data-stream text-on-surface">34.0522° N</div>
+</div>
+<div>
+<div class="font-label-caps text-[10px] text-outline mb-1">LONGITUDE</div>
+<div class="font-data-stream text-data-stream text-on-surface">118.2437° W</div>
+</div>
+</div>
+<div class="flex-1 border border-white/10 bg-surface p-3 mt-2 flex flex-col">
+<div class="font-label-caps text-[10px] text-outline mb-2">Z-AXIS IMPACT PROFILE</div>
+<div class="flex-1 relative border-l border-b border-white/20">
+<!-- Simulated Graph Line -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<polyline class="opacity-80" fill="none" points="0,50 20,50 40,20 50,80 60,40 70,55 80,48 100,50" stroke="#FF1744" stroke-width="2"></polyline>
+<line stroke="rgba(255,255,255,0.2)" stroke-dasharray="2,2" x1="0" x2="100" y1="50" y2="50"></line>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Diagnostic Strip -->
+<div class="h-8 bg-surface-container-highest border-t border-outline-variant flex items-center px-4 font-data-stream text-[10px] text-outline justify-between uppercase tracking-widest z-50">
+<div>SYS_STATUS: NOMINAL // SENSORS: 12/12 ONLINE // AI_CORE: ACTIVE</div>
+<div>UPLINK: SECURE [94ms] // NAYAN_SEVAK_V2.4.1</div>
+</div>
+<style>
+        .blinking {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</body></html>

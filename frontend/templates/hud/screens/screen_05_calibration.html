@@ -1,0 +1,113 @@
+<div class="w-full h-full flex flex-col"><div class="flex flex-1 pt-12 pl-20 relative">
+
+<main class="flex-1 p-margin-screen h-full overflow-y-auto w-full max-w-7xl mx-auto flex flex-col gap-stack-lg">
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<div class="lg:col-span-8 flex flex-col gap-stack-md">
+<div class="bg-[#12161F] rounded-lg p-container-padding glow-border">
+<h2 class="text-label-caps font-label-caps text-secondary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+                            DETECTION THRESHOLDS
+                        </h2>
+<div class="space-y-8">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="text-data-stream font-data-stream text-on-surface">CAMERA CONFIDENCE CUTOFF</label>
+<span class="text-label-caps font-label-caps text-secondary font-bold">0.50</span>
+</div>
+<div class="relative w-full h-1 bg-surface-container-high">
+<div class="absolute h-full bg-secondary w-[50%]"></div>
+<input class="absolute w-full h-1 opacity-0 cursor-pointer slider-thumb" max="1" min="0" step="0.01" style="top: -4px;" type="range" value="0.5"/>
+</div>
+<div class="flex justify-between text-[10px] font-data-stream text-on-surface-variant mt-1">
+<span>0.0 (RELAXED)</span>
+<span>1.0 (STRICT)</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="text-data-stream font-data-stream text-on-surface">VIBRATION TRIGGER (G-FORCE)</label>
+<span class="text-label-caps font-label-caps text-secondary font-bold">1.8G</span>
+</div>
+<div class="relative w-full h-1 bg-surface-container-high">
+<div class="absolute h-full bg-secondary w-[60%]"></div>
+<input class="absolute w-full h-1 opacity-0 cursor-pointer slider-thumb" max="3" min="0" step="0.1" style="top: -4px;" type="range" value="1.8"/>
+</div>
+<div class="flex justify-between text-[10px] font-data-stream text-on-surface-variant mt-1">
+<span>0.5G (SENSITIVE)</span>
+<span>3.0G (HEAVY IMPACT)</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<label class="text-data-stream font-data-stream text-on-surface">ULTRASONIC PROXIMITY RANGE</label>
+<span class="text-label-caps font-label-caps text-secondary font-bold">150 CM</span>
+</div>
+<div class="relative w-full h-1 bg-surface-container-high">
+<div class="absolute h-full bg-secondary w-[75%]"></div>
+<input class="absolute w-full h-1 opacity-0 cursor-pointer slider-thumb" max="200" min="20" step="5" style="top: -4px;" type="range" value="150"/>
+</div>
+<div class="flex justify-between text-[10px] font-data-stream text-on-surface-variant mt-1">
+<span>20 CM (CLOSE)</span>
+<span>200 CM (MAX)</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-[#12161F] rounded-lg p-container-padding glow-border">
+<h2 class="text-label-caps font-label-caps text-secondary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">merge_type</span>
+                            SENSOR FUSION TUNING
+                        </h2>
+<div class="flex items-center justify-between p-4 bg-surface-container/50 border border-white/5">
+<div class="flex flex-col gap-1">
+<span class="text-data-stream font-data-stream text-on-surface">ADAPTIVE WEATHER WEIGHTING</span>
+<span class="text-[10px] font-data-stream text-on-surface-variant">Prioritize radar in low-visibility conditions.</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface border-4 border-surface-container appearance-none cursor-pointer z-10 top-0 left-0 checked:left-6 transition-all duration-200" id="toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-high cursor-pointer transition-colors duration-200" for="toggle"></label>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-stack-md h-full">
+<div class="bg-[#12161F] rounded-lg p-container-padding glow-border h-full flex flex-col">
+<h2 class="text-label-caps font-label-caps text-secondary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">cable</span>
+                            HARDWARE TELEMETRY
+                        </h2>
+<div class="flex-1 flex flex-col justify-center gap-8 border-t border-b border-white/5 py-8 my-4">
+<div class="flex flex-col items-center justify-center gap-2 text-center">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center relative mb-2">
+<span class="absolute top-0 right-0 w-3 h-3 bg-[#00FF66] rounded-full shadow-[0_0_10px_#00FF66] animate-pulse"></span>
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant">usb</span>
+</div>
+<span class="text-data-stream font-data-stream text-on-surface block">WOKWI VIRTUAL SERIAL</span>
+<span class="text-label-caps font-label-caps text-[#00FF66] tracking-widest block">CONNECTED</span>
+<span class="text-[10px] font-data-stream text-on-surface-variant block">/dev/ttyUSB0</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-3 border border-white/5 text-center flex flex-col gap-1">
+<span class="text-[10px] font-data-stream text-on-surface-variant">LOOP LATENCY</span>
+<span class="text-label-caps font-label-caps text-secondary">32<span class="text-[10px]">ms</span></span>
+</div>
+<div class="bg-surface-container-lowest p-3 border border-white/5 text-center flex flex-col gap-1">
+<span class="text-[10px] font-data-stream text-on-surface-variant">PACKET LOSS</span>
+<span class="text-label-caps font-label-caps text-secondary">0.02%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-6 flex justify-end gap-4 border-t border-white/10 sticky bottom-0 bg-background/90 backdrop-blur pb-8 z-10">
+<button class="px-6 py-3 bg-transparent border border-white/20 text-on-surface font-label-caps text-label-caps hover:bg-surface-container transition-colors">
+                    RESET DEFAULTS
+                </button>
+<button class="px-6 py-3 bg-transparent border border-secondary text-secondary font-label-caps text-label-caps hover:bg-secondary hover:text-black transition-colors shadow-[0_0_15px_rgba(0,227,253,0.2)] hover:shadow-[0_0_20px_rgba(0,227,253,0.5)]">
+                    SAVE CALIBRATION
+                </button>
+</div>
+</main>
+</div></div>

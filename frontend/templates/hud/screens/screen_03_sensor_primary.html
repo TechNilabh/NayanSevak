@@ -1,0 +1,208 @@
+<div class="w-full h-full flex flex-col"><!-- Top Notification Banner (Alert) -->
+<div class="w-full bg-alert-orange/20 border-b border-alert-orange/50 py-2 px-margin-screen flex items-center justify-center gap-4 z-50 absolute top-0 left-0 right-0">
+<span class="material-symbols-outlined text-alert-orange blinking" data-icon="warning">warning</span>
+<span class="font-label-caps text-label-caps text-white tracking-widest">SENSOR-PRIMARY MODE ACTIVE · VISUAL CONFIDENCE REDUCED — WEIGHT SHIFTED TO TELEMETRY</span>
+</div>
+<!-- Main HUD Grid -->
+<main class="flex-1  mb-20 px-margin-screen py-stack-lg grid grid-cols-12 gap-6 h-full relative">
+<!-- Left Zone: Live Dashcam & Status -->
+<div class="col-span-3 flex flex-col gap-6 h-full">
+<div class="glass-card flex-1 flex flex-col overflow-hidden relative border-alert-orange/30">
+<div class="absolute inset-0 bg-black/60 backdrop-blur-md z-10 flex flex-col items-center justify-center">
+<span class="material-symbols-outlined text-alert-orange text-4xl mb-2" data-icon="fog">cloud_download</span>
+<div class="font-label-caps text-label-caps bg-alert-orange/20 text-alert-orange border border-alert-orange/50 px-3 py-1 rounded-sm">LOW VISIBILITY (42%)</div>
+</div>
+<img class="w-full h-full object-cover opacity-30 grayscale filter sepia-[.3] hue-rotate-[180deg]" data-alt="A degraded live dashcam feed of a road at night in heavy fog, obscured and blurry, brutalist HUD overlay style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGAagNtS0Ux0zVQb6Dc_bO4pLVfxXNElUITqfS_x7wZoBYihEIT3t1cWzrHsyMaewDkrfEbmXlhloxCY6znh0bayNBvCO6UY5BnzgvJTDszD61H9zv_4unTTFSIQlNK7wkjbT9ol0sPdDb-FwkW7FgMPwdkQKObov0QVzfrgsfmgOfT6rf_ITICim6WF9d5fQoiFOdTpZW5k-4TAwTIabcKVOTET1EEj3b-0DNCgVtWhOgkru4G_Sl_g">
+<div class="absolute top-4 left-4 z-20 font-label-caps text-label-caps text-outline">CAM_01_FWD</div>
+</div>
+<div class="glass-card h-48 p-container-padding flex flex-col">
+<div class="font-label-caps text-label-caps text-outline mb-4">SENSOR ARRAY STATUS</div>
+<div class="flex-1 flex flex-col justify-around">
+<div class="flex justify-between items-center">
+<span class="font-data-stream text-data-stream text-on-surface-variant">LIDAR_FWD</span>
+<span class="font-data-stream text-data-stream text-secondary-fixed-dim">ACTIVE</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-data-stream text-data-stream text-on-surface-variant">RADAR_360</span>
+<span class="font-data-stream text-data-stream text-secondary-fixed-dim">ACTIVE</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-data-stream text-data-stream text-on-surface-variant">VISUAL_OPTICS</span>
+<span class="font-data-stream text-data-stream text-error blinking">DEGRADED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Center Zone: Primary Telemetry & Vehicle -->
+<div class="col-span-6 flex flex-col items-center justify-center relative">
+<!-- Fusion Gauge -->
+<div class="relative w-96 h-96 flex items-center justify-center">
+<!-- SVG Arc Rings -->
+<svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+<!-- Background Track -->
+<circle cx="100" cy="100" fill="none" r="90" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2 4" stroke-width="8"></circle>
+<!-- Sensor Arc (Dominant Orange) -->
+<circle class="glow-orange" cx="100" cy="100" fill="none" r="90" stroke="#FF8F00" stroke-dasharray="400" stroke-dashoffset="100" stroke-width="8" style="transform: rotate(135deg); transform-origin: center;"></circle>
+<!-- Camera Arc (Cyan Minor) -->
+<circle cx="100" cy="100" fill="none" r="90" stroke="#00daf3" stroke-dasharray="100 500" stroke-dashoffset="0" stroke-width="8" style="transform: rotate(-45deg); transform-origin: center;"></circle>
+</svg>
+<div class="text-center z-10 flex flex-col items-center">
+<div class="font-speed-display text-speed-display text-white">86</div>
+<div class="font-label-caps text-label-caps text-outline tracking-widest mt-2">FUSED CONFIDENCE</div>
+<div class="font-data-stream text-data-stream text-alert-orange mt-1">TELEMETRY BIAS</div>
+</div>
+</div>
+<!-- Vehicle Vector Vector -->
+<div class="flex flex-col items-center justify-end w-full relative z-20 mt-2">
+  <!-- Vehicle Dynamics Dual-Stat Telemetry Chip -->
+  <div class="flex items-center gap-4 px-4 py-1.5 rounded-full border border-[#FFB300]/25 bg-[#12161F]/80 backdrop-blur-md mb-2 shadow-lg">
+    <div class="flex items-center gap-1.5 font-label-caps text-[11px]">
+      <span class="text-[#e8bcbb]/70 tracking-wider uppercase font-medium">LATERAL</span>
+      <span class="text-[#FFB300] font-bold tabular-nums">0.8g</span>
+    </div>
+    <div class="h-3.5 w-px bg-[#FFB300]/25"></div>
+    <div class="flex items-center gap-1.5 font-label-caps text-[11px]">
+      <span class="text-[#e8bcbb]/70 tracking-wider uppercase font-medium">LONGITUDINAL</span>
+      <span class="text-[#FFB300] font-bold tabular-nums">0.4g</span>
+    </div>
+  </div>
+
+  <!-- Holographic 2.5D Chassis Display with Proximity Sensor Pins -->
+  <div class="relative w-80 h-56 flex items-center justify-center">
+    <!-- Ground Plane Glow & Ambient Occlusion -->
+    <div class="absolute inset-x-8 bottom-4 h-24 rounded-full bg-[#FF8F00]/10 blur-xl pointer-events-none"></div>
+    <div class="absolute inset-x-12 bottom-6 h-16 rounded-full bg-[#00daf3]/10 blur-lg pointer-events-none"></div>
+
+    <!-- Front-Left Proximity Pin -->
+    <div class="absolute top-2 left-0 flex items-center gap-1 z-30">
+      <div class="px-2 py-0.5 rounded border border-[#FFB300]/60 bg-[#0c0e12]/90 backdrop-blur text-[#FFB300] font-data-stream text-[10px] font-bold shadow-md">
+        142 cm
+      </div>
+      <svg class="w-8 h-6 overflow-visible" viewBox="0 0 32 24">
+        <line x1="0" y1="12" x2="22" y2="12" stroke="#FFB300" stroke-width="1" stroke-opacity="0.7"></line>
+        <line x1="22" y1="12" x2="32" y2="22" stroke="#FFB300" stroke-width="1" stroke-opacity="0.7"></line>
+        <circle cx="32" cy="22" r="2" fill="#FFB300"></circle>
+      </svg>
+    </div>
+
+    <!-- Front-Right Proximity Pin -->
+    <div class="absolute top-2 right-0 flex items-center gap-1 z-30 flex-row-reverse">
+      <div class="px-2 py-0.5 rounded border border-[#FFB300]/60 bg-[#0c0e12]/90 backdrop-blur text-[#FFB300] font-data-stream text-[10px] font-bold shadow-md">
+        138 cm
+      </div>
+      <svg class="w-8 h-6 overflow-visible" viewBox="0 0 32 24">
+        <line x1="32" y1="12" x2="10" y2="12" stroke="#FFB300" stroke-width="1" stroke-opacity="0.7"></line>
+        <line x1="10" y1="12" x2="0" y2="22" stroke="#FFB300" stroke-width="1" stroke-opacity="0.7"></line>
+        <circle cx="0" cy="22" r="2" fill="#FFB300"></circle>
+      </svg>
+    </div>
+
+    <!-- Rear-Left Proximity Pin -->
+    <div class="absolute bottom-8 left-2 flex items-center gap-1 z-30">
+      <div class="px-2 py-0.5 rounded border border-[#00daf3]/60 bg-[#0c0e12]/90 backdrop-blur text-[#00daf3] font-data-stream text-[10px] font-bold shadow-md">
+        38 cm
+      </div>
+      <svg class="w-8 h-6 overflow-visible" viewBox="0 0 32 24">
+        <line x1="0" y1="12" x2="20" y2="12" stroke="#00daf3" stroke-width="1" stroke-opacity="0.7"></line>
+        <line x1="20" y1="12" x2="32" y2="2" stroke="#00daf3" stroke-width="1" stroke-opacity="0.7"></line>
+        <circle cx="32" cy="2" r="2" fill="#00daf3"></circle>
+      </svg>
+    </div>
+
+    <!-- Rear-Right Proximity Pin -->
+    <div class="absolute bottom-8 right-2 flex items-center gap-1 z-30 flex-row-reverse">
+      <div class="px-2 py-0.5 rounded border border-[#00daf3]/60 bg-[#0c0e12]/90 backdrop-blur text-[#00daf3] font-data-stream text-[10px] font-bold shadow-md">
+        34 cm
+      </div>
+      <svg class="w-8 h-6 overflow-visible" viewBox="0 0 32 24">
+        <line x1="32" y1="12" x2="12" y2="12" stroke="#00daf3" stroke-width="1" stroke-opacity="0.7"></line>
+        <line x1="12" y1="12" x2="0" y2="2" stroke="#00daf3" stroke-width="1" stroke-opacity="0.7"></line>
+        <circle cx="0" cy="2" r="2" fill="#00daf3"></circle>
+      </svg>
+    </div>
+
+    <!-- Detailed 2.5D Technical Holographic Chassis SVG -->
+    <svg class="w-48 h-56 drop-shadow-[0_0_15px_rgba(255,143,0,0.15)] relative z-20" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Projection Light Cones -->
+      <path d="M58 24 L34 2 L64 2 Z" fill="url(#amber_cone)" opacity="0.6"></path>
+      <path d="M102 24 L126 2 L96 2 Z" fill="url(#amber_cone)" opacity="0.6"></path>
+      <!-- Ground Track Ring -->
+      <ellipse cx="80" cy="195" rx="44" ry="12" stroke="#FF8F00" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 3"></ellipse>
+      <!-- Aerodynamic Wheels -->
+      <rect x="31" y="46" width="7" height="24" rx="3" fill="#1e2024" stroke="#FF8F00" stroke-width="1" stroke-opacity="0.5"></rect>
+      <rect x="122" y="46" width="7" height="24" rx="3" fill="#1e2024" stroke="#FF8F00" stroke-width="1" stroke-opacity="0.5"></rect>
+      <rect x="31" y="150" width="7" height="24" rx="3" fill="#1e2024" stroke="#00daf3" stroke-width="1" stroke-opacity="0.5"></rect>
+      <rect x="122" y="150" width="7" height="24" rx="3" fill="#1e2024" stroke="#00daf3" stroke-width="1" stroke-opacity="0.5"></rect>
+      <!-- Main Chassis Outer Shell -->
+      <path d="M52 24 C62 20 98 20 108 24 C116 27 122 38 122 55 L121 82 C125 94 125 126 121 138 L122 170 C122 188 114 198 104 201 C92 204 68 204 56 201 C46 198 38 188 38 170 L39 138 C35 126 35 94 39 82 L38 55 C38 38 44 27 52 24 Z" fill="#10141D" fill-opacity="0.9" stroke="#333539" stroke-width="1.5"></path>
+      <!-- Neon Amber Front Fender Highlight -->
+      <path d="M50 24 C60 21 100 21 110 24" stroke="#FF8F00" stroke-width="2" stroke-linecap="round"></path>
+      <!-- Front Headlight LED Bars -->
+      <path d="M52 28 L64 26" stroke="#FFB300" stroke-width="2.5" stroke-linecap="round"></path>
+      <path d="M108 28 L96 26" stroke="#FFB300" stroke-width="2.5" stroke-linecap="round"></path>
+      <!-- Hood Crease Lines -->
+      <path d="M62 28 L66 60 M98 28 L94 60" stroke="#FF8F00" stroke-opacity="0.3" stroke-width="1"></path>
+      <!-- Cyan Glass Cabin & Roof -->
+      <path d="M56 64 C64 62 96 62 104 64 C110 65 113 74 112 92 L111 128 C111 144 108 152 102 154 C94 156 66 156 58 154 C52 152 49 144 49 128 L48 92 C47 74 50 65 56 64 Z" fill="#00275e" fill-opacity="0.35" stroke="#00daf3" stroke-width="1.2" stroke-opacity="0.7"></path>
+      <!-- Glass Reflection Highlight -->
+      <path d="M54 70 L102 70 M53 96 C70 94 90 94 107 96" stroke="#00daf3" stroke-opacity="0.35" stroke-width="1"></path>
+      <!-- Side Sills (Cyan Accents) -->
+      <path d="M37 92 L37 130" stroke="#00daf3" stroke-width="2" stroke-linecap="round" stroke-opacity="0.8"></path>
+      <path d="M123 92 L123 130" stroke="#00daf3" stroke-width="2" stroke-linecap="round" stroke-opacity="0.8"></path>
+      <!-- Rear Diffuser & Light Bar -->
+      <path d="M54 198 C66 201 94 201 106 198" stroke="#00daf3" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M62 188 L98 188" stroke="#FF8F00" stroke-width="1.5" stroke-opacity="0.7"></path>
+      <!-- Center Vehicle Apex Sensor Indicator -->
+      <circle cx="80" cy="38" r="2.5" fill="#FF8F00" class="blinking"></circle>
+      <!-- Definitions -->
+      <defs>
+        <linearGradient id="amber_cone" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#FF8F00" stop-opacity="0.35"></stop>
+          <stop offset="100%" stop-color="#FF8F00" stop-opacity="0"></stop>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
+</div>
+<!-- Right Zone: Telemetry Streams -->
+<div class="col-span-3 flex flex-col gap-6 h-full">
+<!-- MPU6050 Oscilloscope -->
+<div class="glass-card flex-1 p-container-padding flex flex-col">
+<div class="font-label-caps text-label-caps text-outline mb-2 flex justify-between">
+<span class="">MPU6050_VIB</span>
+<span class="text-secondary-fixed-dim">RAW</span>
+</div>
+<div class="flex-1 relative w-full h-full overflow-hidden flex items-center justify-center opacity-70">
+<svg class="w-full h-full preserve-aspect-ratio-none" viewBox="0 0 200 50">
+<path class="wave-line" d="M0,25 Q10,0 20,25 T40,25 T60,10 T80,25 T100,40 T120,25 T140,5 T160,25 T180,35 T200,25" fill="none" stroke="#00daf3" stroke-width="1.5"></path>
+<path class="wave-line" d="M0,25 Q15,40 30,25 T60,25 T90,5 T120,25 T150,45 T180,25 T200,25" fill="none" stroke="#FF8F00" stroke-width="1" style="animation-delay: -0.5s;"></path>
+</svg>
+</div>
+</div>
+<!-- Ultrasonic Scope -->
+<div class="glass-card flex-1 p-container-padding flex flex-col">
+<div class="font-label-caps text-label-caps text-outline mb-2 flex justify-between">
+<span class="">SONAR_DIST</span>
+<span class="text-alert-orange">PING</span>
+</div>
+<div class="flex-1 relative w-full h-full overflow-hidden flex items-center justify-center opacity-70">
+<svg class="w-full h-full preserve-aspect-ratio-none" viewBox="0 0 200 50">
+<line stroke="rgba(255,255,255,0.1)" stroke-width="1" x1="0" x2="200" y1="25" y2="25"></line>
+<path d="M0,25 L10,25 L15,5 L20,45 L25,25 L50,25 L55,10 L60,40 L65,25 L200,25" fill="none" stroke="#FF8F00" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="glass-card h-24 p-container-padding flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline">ENV_TEMP</span>
+<span class="font-headline-md text-headline-md text-white">12°C</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="font-label-caps text-label-caps text-outline">PITCH/ROLL</span>
+<span class="font-data-stream text-data-stream text-secondary-fixed-dim">+2.1 / -0.4</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Bottom Bar (from JSON) --></div>

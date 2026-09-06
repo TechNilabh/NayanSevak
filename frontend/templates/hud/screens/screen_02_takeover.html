@@ -1,0 +1,56 @@
+<div class="hud-overlay w-full h-full flex flex-col items-center justify-center p-6"><!-- Global Vignette Overlay -->
+<div class="absolute inset-0 pointer-events-none vignette-alert z-50 rounded-lg m-2"></div>
+<!-- Central Alert HUD -->
+<main class="w-full h-full flex flex-col items-center justify-center p-margin-screen relative z-10 space-y-stack-lg">
+<!-- Hazard Visualizer -->
+<div class="relative flex items-center justify-center w-64 h-64 mb-stack-md">
+<!-- Concentric Rings -->
+<div class="absolute inset-0 rounded-full border border-error/50 ring-1"></div>
+<div class="absolute inset-0 rounded-full border border-error/30 ring-2"></div>
+<div class="absolute inset-0 rounded-full border border-error/10 ring-3"></div>
+<!-- Core Icon -->
+<div class="relative z-10 bg-error/20 rounded-full p-8 border border-error shadow-[0_0_40px_rgba(255,23,68,0.6)]">
+<span class="material-symbols-outlined text-[80px] text-error" style="font-variation-settings: 'FILL' 1;">
+                    warning
+                </span>
+</div>
+</div>
+<!-- Typography Cluster -->
+<div class="text-center flex flex-col items-center space-y-stack-sm">
+<h1 class="text-error font-headline-lg text-headline-lg tracking-widest glitch-text uppercase">
+                POTHOLE DETECTED
+            </h1>
+<div class="font-speed-display text-speed-display text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] flex items-baseline">
+                32<span class="text-headline-lg font-headline-lg ml-2 text-on-surface-variant">m</span>
+</div>
+</div>
+<!-- Telemetry Sub-cards (Bento-style layout for data) -->
+<div class="grid grid-cols-2 gap-gutter w-full max-w-4xl mt-stack-md">
+<!-- Z-Axis Data -->
+<div class="bg-surface-container-lowest border border-white/10 rounded-[16px] p-container-padding flex flex-col justify-center items-center relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error/80"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-unit tracking-widest uppercase">Z-Axis Shock</span>
+<span class="font-headline-md text-headline-md text-error font-bold">+2.4G PREDICTED</span>
+</div>
+<!-- Recommendation Data -->
+<div class="bg-surface-container-lowest border border-white/10 rounded-[16px] p-container-padding flex flex-col justify-center items-center relative overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-1 bg-secondary-container/80"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-unit tracking-widest uppercase">Recommended Speed</span>
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">&lt; 30 KM/H</span>
+</div>
+</div>
+<!-- Action Area -->
+<div class="flex gap-gutter w-full max-w-4xl mt-stack-lg z-20">
+<button class="flex-1 bg-transparent border border-error text-error font-label-caps text-label-caps py-6 uppercase tracking-widest hover:bg-error/10 transition-colors duration-200" onclick="window.location.href='index.html'">
+                Dismiss
+            </button>
+<button class="flex-1 bg-error text-black font-label-caps text-label-caps py-6 uppercase tracking-widest shadow-[0_0_20px_rgba(255,23,68,0.4)] hover:bg-white hover:text-black hover:shadow-[0_0_30px_rgba(255,255,255,0.8)] transition-all duration-200" onclick="window.location.href='index.html'">
+                Slow Down Acknowledged
+            </button>
+</div>
+</main>
+<!-- Top App Bar (Suppressed as per rules for linear/transactional/alert screens, but adding ambient top status data) -->
+<div class="fixed top-0 left-0 w-full p-margin-screen flex justify-between items-start pointer-events-none opacity-50">
+<div class="font-data-stream text-data-stream text-error">SYS_ALERT_ID: 0x8F92</div>
+<div class="font-data-stream text-data-stream text-error animate-pulse">EMERGENCY OVERRIDE ENGAGED</div>
+</div></div>
