@@ -123,16 +123,27 @@ def train_model():
     joblib.dump(model, MODEL_PATH)
     print(f"Model saved as: {MODEL_PATH}")
     
+_vibration_model = None
+
 def predict_vibration_probability(window):
-    model = joblib.load(MODEL_PATH)
-    features = extract_features(window)
-    probabilities = model.predict_proba([features])[0]
-    classes = model.classes_
-    pothole_probability = 0.0
-    for class_id, probability in zip(classes, probabilities):
-        if int(class_id) == 1:
-            pothole_probability = float(probability)
-    return pothole_probability
+    """Return pothole-class probability [0, 1]. Lazy-loads the RF model once.
+    Returns 0.0 if the model file does not exist yet (pre-training state)."""
+    global _vibration_model
+    try:
+        if _vibration_model is None:
+            _vibration_model = joblib.load(MODEL_PATH)
+        features = extract_features(window)
+        probabilities = _vibration_model.predict_proba([features])[0]
+        classes = _vibration_model.classes_
+        pothole_probability = 0.0
+        for class_id, probability in zip(classes, probabilities):
+            if int(class_id) == 1:
+                pothole_probability = float(probability)
+        return pothole_probability
+    except FileNotFoundError:
+        return 0.0
+    except Exception:
+        return 0.0
 
 if __name__ == "__main__":
     train_model()

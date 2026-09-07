@@ -54,8 +54,44 @@ const HUDRouter = (function () {
         }
     }
 
-    function navigateTo(screenId) {
-        console.log(`[HUDRouter] Navigating to screen: ${screenId}`);
+    // ------------------------------------------------------------------
+    // Hazard context injection
+    // ------------------------------------------------------------------
+
+    /**
+     * Inject hazard payload values into [data-telemetry="hazard-*"] elements.
+     * Called after screen HTML has been inserted so the elements exist in DOM.
+     * @param {Object} payload  — { distance?: number|string, type?: string }
+     * @param {Element} root    — container element to search within
+     */
+    function injectHazardPayload(payload, root) {
+        if (!payload || Object.keys(payload).length === 0) return;
+        const container = root || document;
+
+        if (payload.distance !== undefined) {
+            container.querySelectorAll('[data-telemetry="hazard-distance"]').forEach(el => {
+                el.textContent = Math.round(payload.distance);
+            });
+        }
+        if (payload.type !== undefined) {
+            container.querySelectorAll('[data-telemetry="hazard-type"]').forEach(el => {
+                // Convert "pothole" → "POTHOLE DETECTED", "obstacle" → "OBSTACLE AHEAD" etc.
+                const label = payload.type === 'pothole'
+                    ? 'POTHOLE DETECTED'
+                    : payload.type === 'obstacle'
+                        ? 'OBSTACLE AHEAD'
+                        : payload.type.toUpperCase();
+                el.textContent = label;
+            });
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Navigation
+    // ------------------------------------------------------------------
+
+    function navigateTo(screenId, payload) {
+        console.log(`[HUDRouter] Navigating to screen: ${screenId}`, payload || '');
         activeScreen = screenId;
 
         const mainContainer = document.getElementById('hud-content');
@@ -66,12 +102,14 @@ const HUDRouter = (function () {
             // Render inside full-bleed #hud-overlay
             if (screenCache[screenId]) {
                 overlayContainer.innerHTML = screenCache[screenId];
+                injectHazardPayload(payload, overlayContainer);
             } else {
                 fetch(`/templates/hud/screens/${screenId}.html`)
                     .then(r => r.text())
                     .then(html => {
                         screenCache[screenId] = html;
                         overlayContainer.innerHTML = html;
+                        injectHazardPayload(payload, overlayContainer);
                     });
             }
             overlayContainer.classList.remove('hidden');
@@ -82,12 +120,14 @@ const HUDRouter = (function () {
 
             if (screenCache[screenId]) {
                 mainContainer.innerHTML = screenCache[screenId];
+                injectHazardPayload(payload, mainContainer);
             } else {
                 fetch(`/templates/hud/screens/${screenId}.html`)
                     .then(r => r.text())
                     .then(html => {
                         screenCache[screenId] = html;
                         mainContainer.innerHTML = html;
+                        injectHazardPayload(payload, mainContainer);
                     });
             }
         }

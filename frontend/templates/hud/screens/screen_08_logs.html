@@ -31,49 +31,9 @@
 <div class="col-span-1">METRICS</div>
 <div class="col-span-1 text-right">SEVERITY</div>
 </div>
-<div class="overflow-y-auto flex-1 pr-2 flex flex-col gap-2">
-<!-- Row 1 -->
-<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 border-error cursor-pointer">
-<div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">14:02:45.102</div>
-<div class="col-span-2 flex items-center gap-3">
-<span class="material-symbols-outlined text-error">warning</span>
-<span class="font-label-caps text-label-caps text-on-surface">SEVERE POTHOLE</span>
-</div>
-<div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">
-                                45M <span class="text-on-surface-variant">|</span> 92%
-                            </div>
-<div class="col-span-1 text-right">
-<span class="px-2 py-1 bg-error/20 text-error border border-error/30 font-label-caps text-[10px] tracking-wider">CRITICAL</span>
-</div>
-</div>
-<!-- Row 2 -->
-<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 border-[#FFC107] cursor-pointer">
-<div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">13:58:12.884</div>
-<div class="col-span-2 flex items-center gap-3">
-<span class="material-symbols-outlined text-[#FFC107]">construction</span>
-<span class="font-label-caps text-label-caps text-on-surface">DEBRIS DETECTED</span>
-</div>
-<div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">
-                                120M <span class="text-on-surface-variant">|</span> 78%
-                            </div>
-<div class="col-span-1 text-right">
-<span class="px-2 py-1 bg-[#FFC107]/20 text-[#FFC107] border border-[#FFC107]/30 font-label-caps text-[10px] tracking-wider">MODERATE</span>
-</div>
-</div>
-<!-- Row 3 -->
-<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 border-secondary-fixed-dim cursor-pointer">
-<div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">13:45:01.300</div>
-<div class="col-span-2 flex items-center gap-3">
-<span class="material-symbols-outlined text-secondary-fixed-dim">speed</span>
-<span class="font-label-caps text-label-caps text-on-surface">SPEED LIMIT CHANGE</span>
-</div>
-<div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">
-                                5M <span class="text-on-surface-variant">|</span> 99%
-                            </div>
-<div class="col-span-1 text-right">
-<span class="px-2 py-1 bg-secondary-fixed-dim/20 text-secondary-fixed-dim border border-secondary-fixed-dim/30 font-label-caps text-[10px] tracking-wider">INFO</span>
-</div>
-</div>
+<div id="hazard-log-list" class="overflow-y-auto flex-1 pr-2 flex flex-col gap-2">
+<!-- Rows populated from /api/hazards/recent -->
+<div class="flex items-center justify-center h-full text-on-surface-variant font-data-stream text-data-stream opacity-50" id="log-empty-state">Loading hazard history...</div>
 </div>
 </div>
 <!-- Detail Card (Right Column) -->
@@ -123,4 +83,64 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
-    </style></div>
+    </style>
+<script>
+(function () {
+    const LIST_ID = 'hazard-log-list';
+    const EMPTY_ID = 'log-empty-state';
+
+    function tierMeta(tier) {
+        if (tier === 'CRITICAL') return { border: 'border-error', icon: 'warning', iconColor: 'text-error', badgeBg: 'bg-error/20', badgeText: 'text-error', badgeBorder: 'border-error/30', label: 'CRITICAL' };
+        if (tier === 'WARNING')  return { border: 'border-[#FFC107]', icon: 'construction', iconColor: 'text-[#FFC107]', badgeBg: 'bg-[#FFC107]/20', badgeText: 'text-[#FFC107]', badgeBorder: 'border-[#FFC107]/30', label: 'WARNING' };
+        return { border: 'border-secondary-fixed-dim', icon: 'info', iconColor: 'text-secondary-fixed-dim', badgeBg: 'bg-secondary-fixed-dim/20', badgeText: 'text-secondary-fixed-dim', badgeBorder: 'border-secondary-fixed-dim/30', label: 'NOMINAL' };
+    }
+
+    function formatTs(unixSec) {
+        const d = new Date(unixSec * 1000);
+        const pad = n => String(n).padStart(2, '0');
+        const ms  = String(d.getMilliseconds()).padStart(3, '0');
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${ms}`;
+    }
+
+    function renderRow(entry) {
+        const m = tierMeta(entry.tier);
+        const typeLabel = (entry.type || 'unknown').toUpperCase();
+        const distLabel = entry.distance != null ? `${Math.round(entry.distance)}M` : 'N/A';
+        const confLabel = entry.confidence != null ? `${Math.round(entry.confidence * 100)}%` : '--';
+        return `<div class="grid grid-cols-5 gap-4 items-center p-3 bg-surface hover:bg-surface-variant transition-colors border-l-2 ${m.border} cursor-pointer">
+  <div class="col-span-1 font-data-stream text-data-stream text-on-surface-variant">${formatTs(entry.timestamp)}</div>
+  <div class="col-span-2 flex items-center gap-3">
+    <span class="material-symbols-outlined ${m.iconColor}">${m.icon}</span>
+    <span class="font-label-caps text-label-caps text-on-surface">${typeLabel}</span>
+  </div>
+  <div class="col-span-1 font-data-stream text-data-stream text-secondary-fixed-dim">${distLabel} <span class="text-on-surface-variant">|</span> ${confLabel}</div>
+  <div class="col-span-1 text-right">
+    <span class="px-2 py-1 ${m.badgeBg} ${m.badgeText} border ${m.badgeBorder} font-label-caps text-[10px] tracking-wider">${m.label}</span>
+  </div>
+</div>`;
+    }
+
+    async function loadHazardLog() {
+        const list = document.getElementById(LIST_ID);
+        const empty = document.getElementById(EMPTY_ID);
+        if (!list) return;
+        try {
+            const res = await fetch('/api/hazards/recent');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const entries = await res.json();
+            if (entries.length === 0) {
+                if (empty) empty.textContent = 'No hazards logged yet in this session.';
+                return;
+            }
+            if (empty) empty.remove();
+            list.innerHTML = entries.map(renderRow).join('');
+        } catch (err) {
+            console.warn('[screen_08_logs] Failed to load hazard log:', err);
+            if (empty) empty.textContent = 'Could not load hazard history.';
+        }
+    }
+
+    // Run immediately (screen is injected into DOM when this runs)
+    loadHazardLog();
+})();
+</script></div>

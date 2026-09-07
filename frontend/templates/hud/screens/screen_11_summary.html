@@ -20,7 +20,7 @@
 </div>
 <span class="font-label-caps text-label-caps text-on-surface-variant">DRIVE TIME</span>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-lg text-headline-lg text-secondary-container neon-text-cyan">48</span>
+<span class="font-headline-lg text-headline-lg text-secondary-container neon-text-cyan" id="summary-drive-time">--</span>
 <span class="font-data-stream text-data-stream text-on-surface">MIN</span>
 </div>
 </div>
@@ -31,7 +31,7 @@
 </div>
 <span class="font-label-caps text-label-caps text-on-surface-variant">HAZARDS LOGGED</span>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-lg text-headline-lg text-primary">18</span>
+<span class="font-headline-lg text-headline-lg text-primary" id="summary-hazards-count">--</span>
 <span class="font-data-stream text-data-stream text-on-surface">EVENTS</span>
 </div>
 </div>
@@ -127,3 +127,35 @@
 </div>
 </div>
 </div></div>
+<script>
+(function () {
+    async function loadTripSummary() {
+        try {
+            const res = await fetch('/api/trip/summary');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+
+            // Hazards Logged
+            const hazEl = document.getElementById('summary-hazards-count');
+            if (hazEl) hazEl.textContent = data.total_hazards != null ? data.total_hazards : '--';
+
+            // Drive Time (convert seconds → minutes, show as whole number)
+            const dtEl = document.getElementById('summary-drive-time');
+            if (dtEl) {
+                const minutes = data.duration_seconds != null
+                    ? Math.floor(data.duration_seconds / 60)
+                    : '--';
+                dtEl.textContent = minutes;
+            }
+
+            // NOTE: TOTAL DISTANCE and SAFETY INDEX are intentionally left as
+            // static placeholders — no real GPS source exists yet. Do not wire
+            // fabricated numbers into those fields.
+        } catch (err) {
+            console.warn('[screen_11_summary] Failed to load trip summary:', err);
+        }
+    }
+
+    loadTripSummary();
+})();
+</script>
