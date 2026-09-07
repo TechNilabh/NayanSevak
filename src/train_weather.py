@@ -25,13 +25,20 @@ val_transform = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
 ])
 
-full_dataset = datasets.ImageFolder(DATA_DIR)
-train_size = int(0.8 * len(full_dataset))
-val_size = len(full_dataset) - train_size
-train_subset, val_subset = random_split(full_dataset, [train_size, val_size])
+train_dataset = datasets.ImageFolder(DATA_DIR, transform=train_transform)
+val_dataset = datasets.ImageFolder(DATA_DIR, transform=val_transform)
 
-train_subset.dataset.transform = train_transform
-val_subset.dataset.transform = val_transform
+train_size = int(0.8 * len(train_dataset))
+val_size = len(train_dataset) - train_size
+
+train_indices, val_indices = random_split(
+    range(len(train_dataset)),
+    [train_size, val_size],
+    generator=torch.Generator().manual_seed(42)
+)
+
+train_subset = torch.utils.data.Subset(train_dataset, train_indices.indices)
+val_subset = torch.utils.data.Subset(val_dataset, val_indices.indices)
 
 train_loader = DataLoader(train_subset, batch_size=BATCH_SIZE, shuffle=True)
 val_loader = DataLoader(val_subset, batch_size=BATCH_SIZE)
